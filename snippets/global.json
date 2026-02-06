@@ -1,0 +1,183 @@
+{
+  "Quarto/YAML Front Matter": 
+  { "prefix": "yaml",
+    "body":
+    [
+      "---",
+      "title: '$1'",
+      "subtitle: '$0'",
+      "format:",
+      "\trevealjs:",
+      "\t\tauthor: 'Hisashi Takeda, Ph.D.'",
+      "\t\ttoc: true",
+      "\t\tslide-number: true",
+      "\t\tnumber-sections: true",
+      "\t\tchalkboard: true",
+      "\t\tincremental: false",
+      "\t\tlightbox: true",
+      "\t\tcode-line-numbers: true",
+      "\t\tcode-fold: true",
+      "\t\tcode-copy: true",
+      "\t\tsmaller: true",
+      "\t\tscrollable: true",
+      "\t\tlang: 'ja'",
+      "\t\ttheme: [default, ../../../css/slide.scss]",
+      "\t\tlogo: ../../../css/takenoko.png",
+      "\t\tembed-resources: false",
+      "execute:",
+      "\tcache: true",
+      "\tfreeze: auto",
+      "---\n"
+    ]
+  },
+
+  "Moodle/Multiple Choices": 
+  { "prefix": "multi",
+    "body":
+    [
+      "\\begin{multi}{$1}",
+      "\t\\item *$0",
+      "\\end{multi}"
+    ]
+  },
+
+  "Moodle/Short Answer": 
+  { "prefix": "short",
+    "body":
+    [
+      "\\begin{shortanswer}{$1}",
+      "\t\\item $0",
+      "\\end{shortanswer}"
+    ]
+  },
+
+  "Quarto/Quote": 
+  { "prefix": "quo",
+    "body":
+    [
+      "^[$0] "
+    ]
+  },
+
+  "Quarto/Table": 
+  { "prefix": "tab",
+    "body":
+    [
+      "|  |  |  |",
+      "|--|--|--|",
+      "|  |  |  |",
+      "",
+      ": $0 {.striped .hover}"
+    ]
+  },
+
+  "Quarto/Code Chunk": 
+  { "prefix": "chunk",
+    "body":
+    [
+      "```{$0}",
+      "#| code-line-numbers: true",
+      "```"
+    ]
+  },
+
+  "Quarto/Code Chunk for Display": 
+  { "prefix": "code",
+    "body":
+    [
+      "```{.$0 filename='コマンド'}",
+      "#| code-line-numbers: true",
+      "```"
+    ]
+  },
+
+  "Quarto/Two Columns": 
+  { "prefix": "cols",
+    "body":
+    [
+      "::: {layout-ncol=2}",
+      "### ",
+      "- Item a",
+      "### ",
+      "- Item b",
+      ":::"
+    ]
+  },
+
+  "Quarto/Multiple Columns with Width": 
+  { "prefix": "colsw",
+    "body":
+    [
+      ":::: {.columns}",
+      "::: {.column width=50%}",
+      "",
+      ":::",
+      "::: {.column width=50%}",
+      "",
+      ":::",
+      "::::"
+    ]
+  },
+
+  "Quarto/SpeakerNotes": 
+  { "prefix": "notes",
+    "body":
+    [
+      "::: {.notes}",
+      "",
+      ":::"
+    ]
+  },
+
+  "Quarto/Callout Block": 
+  { "prefix": "callout",
+    "body":
+    [
+      "::: {.callout-note title='Note'}",
+      "",
+      ":::"
+    ]
+  },
+
+  "Quarto/Insert Image": {
+    "prefix": ["fig"],
+    "body": ["![](./fig/$0){width=100%}"]
+  },
+
+  "Quarto/Comment": {
+    "prefix": ["comment"],
+    "body": ["<!--", "", "-->"]
+  },
+
+  "Quarto/Solution": {
+    "prefix": ["solution"],
+    "body": ["<!--解答開始-->", "### 解答", "", "<!--解答終了-->"]
+  },
+
+  "Quarto/Carrage Return": {
+    "prefix": ["br"],
+    "body": ["<br/>"]
+  },
+
+  "Quarto/ToDo": {
+    "prefix": ["todo"],
+    "body": ["* [ ] ${1:task} -- due:${2:today} ${3: project:}"]
+  },
+
+  "Rmarkdown/R Chunk Fig": {
+    "prefix": ["rfig"],
+    "body": ["```{r, fig.width=3.5, fig.height=3.5, fig.align='center'}", "", "```"]
+  },
+
+  "Rmarkdown/R Chunk Two Figs": {
+    "prefix": ["rfigs"],
+    "body": [
+      "```{r, fig.width=3.5, fig.height=3.5, fig.align='center'}",
+      "#| layout-ncol: 2",
+      "#| fig-cap:",
+      "#|   - 'cap1'",
+      "#|   - 'cap2'",
+      "",
+      "```"]
+  }
+}

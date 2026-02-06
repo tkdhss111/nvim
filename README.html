@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="python-markdown" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>README</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">README</h1>
+</header>
+<h1>Neovim 設定マニュアル</h1>
+<h2>インストール</h2>
+<pre><code class="language-bash">git clone git@github.com:tkdhss111/vim.git
+</code></pre>
+<p>HTTPS の場合:</p>
+<pre><code class="language-bash">git clone https://github.com/tkdhss111/vim.git
+</code></pre>
+<h3>自動セットアップ（推奨）</h3>
+<p>リポジトリに含まれる <code>install.sh</code> を実行すると、必要な依存パッケージのインストールからシンボリックリンクの作成、プラグインの初期化まで一括で行えます。</p>
+<pre><code class="language-bash">cd vim/.config/nvim
+chmod +x install.sh
+./install.sh
+</code></pre>
+<p><strong>install.sh が行うこと:</strong></p>
+<ol>
+<li>システムパッケージのインストール（git, ripgrep, ctags, build-essential 等）</li>
+<li>Neovim のバージョン確認・インストール（&gt;= 0.11 必須）</li>
+<li>Node.js のインストール（nvm 経由、v22）</li>
+<li>Python ツールのインストール（black, isort）</li>
+<li>Node.js ツールのインストール（prettier）</li>
+<li>StyLua（Lua フォーマッター）のインストール</li>
+<li>R 言語サーバーのインストール</li>
+<li>DuckDB のインストール（オプション、parquet プレビュー用）</li>
+<li>Claude Code CLI のインストール（オプション）</li>
+<li>設定ファイルのシンボリックリンク作成（<code>~/.config/nvim</code>）</li>
+<li>必要なディレクトリの作成（<code>~/VIM_BACKUP_FILES</code> 等）</li>
+<li>プラグイン・Tree-sitter パーサー・Mason ツールのヘッドレスインストール（オプション）</li>
+</ol>
+<p><strong>対応OS:</strong> Ubuntu / Debian 系（その他の Linux でも手動調整で対応可能）</p>
+<h3>手動セットアップ</h3>
+<p>Neovim の設定ファイルはリポジトリ内の <code>.config/nvim/</code> にあります。
+<code>~/.config/nvim</code> へシンボリックリンクを作成してください。</p>
+<pre><code class="language-bash">ln -s /path/to/vim/.config/nvim ~/.config/nvim
+</code></pre>
+<p>例（クローン先が <code>~/vim</code> の場合）:</p>
+<pre><code class="language-bash">ln -s ~/vim/.config/nvim ~/.config/nvim
+</code></pre>
+<p>既に <code>~/.config/nvim</code> が存在する場合は、先にバックアップしてください:</p>
+<pre><code class="language-bash">mv ~/.config/nvim ~/.config/nvim.bak
+ln -s ~/vim/.config/nvim ~/.config/nvim
+</code></pre>
+<h2>概要</h2>
+<p>この設定は <strong>lazy.nvim</strong> をプラグインマネージャーとして使用し、<strong>tokyonight-night</strong> カラースキームを採用しています。</p>
+<p><strong>リーダーキー:</strong> <code>,</code>（カンマ）</p>
+<hr />
+<h2>キーボードショートカット一覧</h2>
+<h3>ナビゲーション - カーソル移動</h3>
+<table>
+<thead>
+<tr>
+<th>ショートカット</th>
+<th>モード</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl+h</code></td>
+<td>Normal/Visual</td>
+<td>行頭へ移動（<code>0</code>と同じ）</td>
+</tr>
+<tr>
+<td><code>Ctrl+l</code></td>
+<td>Normal/Visual</td>
+<td>行末へ移動（<code>$</code>と同じ）</td>
+</tr>
+<tr>
+<td><code>Ctrl+j</code></td>
+<td>Normal</td>
+<td>5行下へ移動</td>
+</tr>
+<tr>
+<td><code>Ctrl+k</code></td>
+<td>Normal</td>
+<td>5行上へ移動</td>
+</tr>
+</tbody>
+</table>
+<h3>ウィンドウ操作</h3>
+<table>
+<thead>
+<tr>
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Shift+h</code></td>
+<td>左のウィンドウへ移動</td>
+</tr>
+<tr>
+<td><code>Shift+j</code></td>
+<td>下のウィンドウへ移動</td>
+</tr>
+<tr>
+<td><code>Shift+k</code></td>
+<td>上のウィンドウへ移動</td>
+</tr>
+<tr>
+<td><code>Shift+l</code></td>
+<td>右のウィンドウへ移動</td>
+</tr>
+<tr>
+<td><code>Shift+Up</code></td>
+<td>ウィンドウの高さを縮小</td>
+</tr>
+<tr>
+<td><code>Shift+Down</code></td>
+<td>ウィンドウの高さを拡大</td>
+</tr>
+<tr>
+<td><code>Shift+Left</code></td>
+<td>ウィンドウの幅を縮小</td>
+</tr>
+<tr>
+<td><code>Shift+Right</code></td>
+<td>ウィンドウの幅を拡大</td>
+</tr>
+</tbody>
+</table>
+<h3>ファイルエクスプローラー (NERDTree)</h3>
+<p><strong>グローバルショートカット:</strong></p>
+<table>
+<thead>
+<tr>
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl+n</code></td>
+<td>NERDTree の表示/非表示</td>
+</tr>
+<tr>
+<td><code>Ctrl+c</code></td>
+<td>現在のファイルを NERDTree で表示</td>
+</tr>
+<tr>
+<td><code>Shift+r</code></td>
+<td>NERDTree を更新</td>
+</tr>
+</tbody>
+</table>
+<p><strong>NERDTree 内 - ファイルを開く:</strong></p>
+<table>
+<thead>
+<tr>
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Enter</code> または <code>o</code></td>
+<td>現在のウィンドウで開く</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td>縦分割で開く</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td>横分割で開く</td>
+</tr>
+<tr>
+<td><code>t</code></td>
+<td>新しいタブで開く</td>
+</tr>
+<tr>
+<td><code>go</code></td>
+<td>プレビュー（カーソルは NERDTree に残る）</td>
+</tr>
+<tr>
+<td><code>gi</code></td>
+<td>横分割でプレビュー</td>
+</tr>
+<tr>
+<td><code>gs</code></td>
+<td>縦分割でプレビュー</td>
+</tr>
+</tbody>
+</table>
+<p><strong>NERDTree 内 - ファイル操作:</strong></p>
+<table>
+<thead>
+<tr>
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>m</code></td>
+<td>ファイルメニューを開く（作成/削除/移動/コピー）</td>
+</tr>
+<tr>
+<td><code>a</code></td>
+<td>新規ファイル作成（メニュー経由）</td>
+</tr>
+<tr>
+<td><code>d</code></td>
+<td>ファイル削除（メニュー経由）</td>
+</tr>
+<tr>
+<td><code>m</code></td>
+<td>ファイル名変更/移動（メニュー経由）</td>
+</tr>
+<tr>
+<td><code>c</code></td>
+<td>ファイルコピー（メニュー経由）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>NERDTree 内 - ナビゲーション:</strong></p>
+<table>
+<thead>
+<tr>
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>u</code></td>
+<td>親ディレクトリへ移動</td>
+</tr>
+<tr>
+<td><code>C</code></td>
+<td>選択したディレクトリをルートに変更</td>
+</tr>
+<tr>
+<td><code>R</code></td>
+<td>ツリーを更新</td>
+</tr>
+<tr>
+<td><code>I</code></td>
+<td>隠しファイルの表示/非表示</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>ヘルプの表示/非表示</td>
+</tr>
+</tbody>
+</table>
+<h3>ファジーファインダー (Telescope)</h3>
+<table>
+<thead>
+<tr>
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>,ff</code></td>
+<td>ファイル検索</td>
+</tr>
+<tr>
+<td><code>,fg</code></td>
+<td>テキスト検索（grep）</td>
+</tr>
+<tr>
+<td><code>,fb</code></td>
+<td>バッファ一覧</td>
+</tr>
+<tr>
+<td><code>,fh</code></td>
+<td>ヘルプタグ検索</td>
+</tr>
+<tr>
+<td><code>,fo</code></td>
+<td>最近開いたファイル</td>
+</tr>
+<tr>
+<td><code>,fk</code></td>
+<td>キーマップ検索</td>
+</tr>
+</tbody>
+</table>
+<h3>LSP (コード補助機能)</h3>
+<table>
+<thead>
+<tr>
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gd</code></td>
+<td>定義へジャンプ</td>
+</tr>
+<tr>
+<td><code>gD</code></td>
+<td>宣言へジャンプ</td>
+</tr>
+<tr>
+<td><code>gr</code></td>
+<td>参照一覧</td>
+</tr>
+<tr>
+<td><code>gi</code></td>
+<td>実装へジャンプ</td>
+</tr>
+<tr>
+<td><code>K</code></td>
+<td>ホバードキュメント表示</td>
+</tr>
+<tr>
+<td><code>,rn</code></td>
+<td>シンボル名変更</td>
+</tr>
+<tr>
+<td><code>,ca</code></td>
+<td>コードアクション</td>
+</tr>
+<tr>
+<td><code>,e</code></td>
+<td>診断メッセージをフロート表示</td>
+</tr>
+<tr>
+<td><code>[d</code></td>
+<td>前の診断へ</td>
+</tr>
+<tr>
+<td><code>]d</code></td>
+<td>次の診断へ</td>
+</tr>
+<tr>
+<td><code>,f</code></td>
+<td>コードフォーマット</td>
+</tr>
+</tbody>
+</table>
+<h3>R プログラミング (R.nvim)</h3>
+<p><em><code>.r</code>, <code>.rmd</code>, <code>.quarto</code> ファイルで有効</em></p>
+<table>
+<thead>
+<tr>
+<th>ショートカット</th>
+<th>モード</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Enter</code></td>
+<td>Normal</td>
+<td>現在行を R コンソールへ送信</td>
+</tr>
+<tr>
+<td><code>Enter</code></td>
+<td>Visual</td>
+<td>選択範囲を R コンソールへ送信</td>
+</tr>
+<tr>
+<td><code>,l</code></td>
+<td>Normal</td>
+<td>現在行を R コンソールへ送信</td>
+</tr>
+<tr>
+<td><code>,l</code></td>
+<td>Visual</td>
+<td>選択範囲を R コンソールへ送信</td>
+</tr>
+<tr>
+<td><code>,su</code></td>
+<td>Normal</td>
+<td>1行目から現在行までを送信</td>
+</tr>
+<tr>
+<td><code>,sd</code></td>
+<td>Normal</td>
+<td>現在行からファイル末尾までを送信</td>
+</tr>
+<tr>
+<td><code>,aa</code></td>
+<td>Normal</td>
+<td>ファイル全体を R コンソールへ送信</td>
+</tr>
+<tr>
+<td><code>;;</code></td>
+<td>Insert</td>
+<td><code>&lt;-</code> を挿入（代入演算子）</td>
+</tr>
+<tr>
+<td><code>&gt;&gt;</code></td>
+<td>Insert</td>
+<td><code>\|&gt;</code> を挿入（パイプ演算子）</td>
+</tr>
+</tbody>
+</table>
+<h3>ビルド / 実行コマンド</h3>
+<table>
+<thead>
+<tr>
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>F2</code></td>
+<td>保存して <code>make debugrun</code></td>
+</tr>
+<tr>
+<td><code>F3</code></td>
+<td>保存して <code>make test</code></td>
+</tr>
+<tr>
+<td><code>F4</code></td>
+<td>保存して <code>make run</code></td>
+</tr>
+<tr>
+<td><code>F5</code></td>
+<td>保存して <code>make release</code></td>
+</tr>
+</tbody>
+</table>
+<h3>ターミナル</h3>
+<table>
+<thead>
+<tr>
+<th>ショートカット</th>
+<th>モード</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>F12</code></td>
+<td>Normal</td>
+<td>分割ウィンドウでターミナルを開く</td>
+</tr>
+<tr>
+<td><code>Esc</code></td>
+<td>Terminal</td>
+<td>ターミナルモードを終了</td>
+</tr>
+</tbody>
+</table>
+<h3>検索・置換 (Ferret)</h3>
+<p>バックエンドに <code>rg</code> (ripgrep) を使用。隠しファイルも検索対象、<code>build/</code> は除外。</p>
+<table>
+<thead>
+<tr>
+<th>コマンド</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>:Ack {pattern}</code></td>
+<td>プロジェクト全体を検索し、結果を QuickFix リストに表示</td>
+</tr>
+<tr>
+<td><code>:Ack {pattern} {path}</code></td>
+<td>指定パス内を検索</td>
+</tr>
+<tr>
+<td><code>:Acks /{old}/{new}/</code></td>
+<td>QuickFix リスト内の一致箇所を一括置換</td>
+</tr>
+</tbody>
+</table>
+<p><strong>典型的なワークフロー:</strong></p>
+<ol>
+<li><code>:Ack foo</code> — プロジェクト内の <code>foo</code> を検索</li>
+<li>QuickFix リストで結果を確認（<code>:cn</code>/<code>:cp</code> で移動）</li>
+<li><code>:Acks /foo/bar/</code> — 検索結果の <code>foo</code> を <code>bar</code> に一括置換</li>
+</ol>
+<h3>テキスト操作</h3>
+<table>
+<thead>
+<tr>
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ciy</code></td>
+<td>ヤンクしたテキストで単語を置換</td>
+</tr>
+<tr>
+<td><code>Ctrl+p</code></td>
+<td>ヤンクしたテキストで単語を置換</td>
+</tr>
+<tr>
+<td><code>cy</code></td>
+<td>ヤンクしたテキストで行を置換</td>
+</tr>
+<tr>
+<td><code>,ww</code></td>
+<td>折り返しの切り替え</td>
+</tr>
+</tbody>
+</table>
+<h3>テキストオブジェクト操作（Vim 標準）</h3>
+<p><code>y</code>（ヤンク）、<code>d</code>（削除）、<code>c</code>（変更）などのオペレータと <code>i</code>（内側）/ <code>a</code>（外側）を組み合わせて、括弧や引用符で囲まれたテキストを操作できます。</p>
+<p><strong><code>yi</code> — 内側をヤンク（yank inside）:</strong></p>
+<table>
+<thead>
+<tr>
+<th>コマンド</th>
+<th>動作</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>yi)</code> or <code>yi(</code></td>
+<td><code>()</code> 内のテキストをヤンク</td>
+<td><code>func(abc)</code> → <code>abc</code> をヤンク</td>
+</tr>
+<tr>
+<td><code>yi]</code> or <code>yi[</code></td>
+<td><code>[]</code> 内のテキストをヤンク</td>
+<td><code>arr[123]</code> → <code>123</code> をヤンク</td>
+</tr>
+<tr>
+<td><code>yi}</code> or <code>yi{</code></td>
+<td><code>{}</code> 内のテキストをヤンク</td>
+<td><code>{key: val}</code> → <code>key: val</code> をヤンク</td>
+</tr>
+<tr>
+<td><code>yi"</code></td>
+<td><code>""</code> 内のテキストをヤンク</td>
+<td><code>"hello"</code> → <code>hello</code> をヤンク</td>
+</tr>
+<tr>
+<td><code>yi'</code></td>
+<td><code>''</code> 内のテキストをヤンク</td>
+<td><code>'world'</code> → <code>world</code> をヤンク</td>
+</tr>
+<tr>
+<td><code>yi`</code></td>
+<td><code></code> <code>内のテキストをヤンク |</code> <code>code</code> <code>` →</code>code` をヤンク</td>
+<td></td>
+</tr>
+<tr>
+<td><code>yit</code></td>
+<td>HTMLタグ内のテキストをヤンク</td>
+<td><code>&lt;p&gt;text&lt;/p&gt;</code> → <code>text</code> をヤンク</td>
+</tr>
+<tr>
+<td><code>yiw</code></td>
+<td>カーソル上の単語をヤンク</td>
+<td><code>hello</code> → <code>hello</code> をヤンク</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>ya</code> — 外側をヤンク（yank around）:</strong></p>
+<table>
+<thead>
+<tr>
+<th>コマンド</th>
+<th>動作</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ya)</code></td>
+<td><code>()</code> を含めてヤンク</td>
+<td><code>func(abc)</code> → <code>(abc)</code> をヤンク</td>
+</tr>
+<tr>
+<td><code>ya"</code></td>
+<td><code>""</code> を含めてヤンク</td>
+<td><code>"hello"</code> → <code>"hello"</code> をヤンク</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>vi</code> — 内側を選択（visual inside）:</strong></p>
+<table>
+<thead>
+<tr>
+<th>コマンド</th>
+<th>動作</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>vi)</code> or <code>vi(</code></td>
+<td><code>()</code> 内のテキストを選択</td>
+<td><code>func(abc)</code> → <code>abc</code> を選択</td>
+</tr>
+<tr>
+<td><code>vi]</code> or <code>vi[</code></td>
+<td><code>[]</code> 内のテキストを選択</td>
+<td><code>arr[123]</code> → <code>123</code> を選択</td>
+</tr>
+<tr>
+<td><code>vi}</code> or <code>vi{</code></td>
+<td><code>{}</code> 内のテキストを選択</td>
+<td><code>{key: val}</code> → <code>key: val</code> を選択</td>
+</tr>
+<tr>
+<td><code>vi"</code></td>
+<td><code>""</code> 内のテキストを選択</td>
+<td><code>"hello"</code> → <code>hello</code> を選択</td>
+</tr>
+<tr>
+<td><code>vi'</code></td>
+<td><code>''</code> 内のテキストを選択</td>
+<td><code>'world'</code> → <code>world</code> を選択</td>
+</tr>
+<tr>
+<td><code>vit</code></td>
+<td>HTMLタグ内のテキストを選択</td>
+<td><code>&lt;p&gt;text&lt;/p&gt;</code> → <code>text</code> を選択</td>
+</tr>
+<tr>
+<td><code>viw</code></td>
+<td>カーソル上の単語を選択</td>
+<td><code>hello</code> → <code>hello</code> を選択</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>va</code> — 外側を選択（visual around）:</strong></p>
+<table>
+<thead>
+<tr>
+<th>コマンド</th>
+<th>動作</th>
+<th>例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>va)</code></td>
+<td><code>()</code> を含めて選択</td>
+<td><code>func(abc)</code> → <code>(abc)</code> を選択</td>
+</tr>
+<tr>
+<td><code>va"</code></td>
+<td><code>""</code> を含めて選択</td>
+<td><code>"hello"</code> → <code>"hello"</code> を選択</td>
+</tr>
+<tr>
+<td><code>va{</code></td>
+<td><code>{}</code> を含めて選択</td>
+<td><code>{key: val}</code> → <code>{key: val}</code> を選択</td>
+</tr>
+<tr>
+<td><code>vat</code></td>
+<td>HTMLタグを含めて選択</td>
+<td><code>&lt;p&gt;text&lt;/p&gt;</code> → <code>&lt;p&gt;text&lt;/p&gt;</code> を選択</td>
+</tr>
+</tbody>
+</table>
+<p><strong><code>di</code> / <code>ci</code> / <code>da</code> / <code>ca</code> — 削除・変更との組み合わせ:</strong></p>
+<table>
+<thead>
+<tr>
+<th>コマンド</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>di)</code></td>
+<td><code>()</code> 内のテキストを削除</td>
+</tr>
+<tr>
+<td><code>ci"</code></td>
+<td><code>""</code> 内のテキストを削除して挿入モードへ</td>
+</tr>
+<tr>
+<td><code>da]</code></td>
+<td><code>[]</code> を含めて削除</td>
+</tr>
+<tr>
+<td><code>ca{</code></td>
+<td><code>{}</code> を含めて削除して挿入モードへ</td>
+</tr>
+</tbody>
+</table>
+<h3>インサートモード補助</h3>
+<table>
+<thead>
+<tr>
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl+h</code></td>
+<td>バックスペース</td>
+</tr>
+<tr>
+<td><code>Ctrl+l</code></td>
+<td>デリート</td>
+</tr>
+<tr>
+<td><code>Ctrl+j</code></td>
+<td>カーソルを下へ</td>
+</tr>
+<tr>
+<td><code>Ctrl+k</code></td>
+<td>カーソルを上へ</td>
+</tr>
+<tr>
+<td><code>Space</code></td>
+<td>インサートモードへ（ノーマルから）</td>
+</tr>
+</tbody>
+</table>
+<h3>補完 (nvim-cmp)</h3>
+<table>
+<thead>
+<tr>
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl+Space</code></td>
+<td>補完を手動起動</td>
+</tr>
+<tr>
+<td><code>Enter</code></td>
+<td>選択を確定</td>
+</tr>
+<tr>
+<td><code>Ctrl+n</code></td>
+<td>次の候補</td>
+</tr>
+<tr>
+<td><code>Ctrl+p</code></td>
+<td>前の候補</td>
+</tr>
+<tr>
+<td><code>Shift+Tab</code></td>
+<td>前の候補 / スニペットジャンプ</td>
+</tr>
+</tbody>
+</table>
+<h3>Claude Code (AI アシスタント)</h3>
+<table>
+<thead>
+<tr>
+<th>ショートカット</th>
+<th>モード</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>,ac</code></td>
+<td>Normal</td>
+<td>Claude Code の表示/非表示</td>
+</tr>
+<tr>
+<td><code>,af</code></td>
+<td>Normal</td>
+<td>Claude Code にフォーカス</td>
+</tr>
+<tr>
+<td><code>,ar</code></td>
+<td>Normal</td>
+<td>前回のセッションを再開</td>
+</tr>
+<tr>
+<td><code>,aC</code></td>
+<td>Normal</td>
+<td>会話を続行</td>
+</tr>
+<tr>
+<td><code>,ab</code></td>
+<td>Normal</td>
+<td>現在のバッファを Claude に追加</td>
+</tr>
+<tr>
+<td><code>,as</code></td>
+<td>Visual</td>
+<td>選択範囲を Claude に送信</td>
+</tr>
+</tbody>
+</table>
+<h3>GitHub Copilot</h3>
+<p><strong>コード補完:</strong></p>
+<table>
+<thead>
+<tr>
+<th>ショートカット</th>
+<th>モード</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Tab</code></td>
+<td>Insert</td>
+<td>提案を承認</td>
+</tr>
+<tr>
+<td><code>Alt+]</code></td>
+<td>Insert</td>
+<td>次の提案</td>
+</tr>
+<tr>
+<td><code>Alt+[</code></td>
+<td>Insert</td>
+<td>前の提案</td>
+</tr>
+<tr>
+<td><code>Ctrl+]</code></td>
+<td>Insert</td>
+<td>提案を却下</td>
+</tr>
+<tr>
+<td><code>Alt+Enter</code></td>
+<td>Insert</td>
+<td>提案パネルを開く</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Copilot Chat:</strong></p>
+<table>
+<thead>
+<tr>
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>,cc</code></td>
+<td>Copilot Chat を開く</td>
+</tr>
+<tr>
+<td><code>,ce</code></td>
+<td>選択コードを説明</td>
+</tr>
+<tr>
+<td><code>,cf</code></td>
+<td>選択コードを修正</td>
+</tr>
+<tr>
+<td><code>,ct</code></td>
+<td>テストを生成</td>
+</tr>
+<tr>
+<td><code>,cq</code></td>
+<td>質問する</td>
+</tr>
+</tbody>
+</table>
+<h3>行・選択範囲の移動 (mini.move)</h3>
+<table>
+<thead>
+<tr>
+<th>ショートカット</th>
+<th>モード</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Alt+j</code></td>
+<td>Normal/Visual</td>
+<td>行/選択範囲を下へ移動</td>
+</tr>
+<tr>
+<td><code>Alt+k</code></td>
+<td>Normal/Visual</td>
+<td>行/選択範囲を上へ移動</td>
+</tr>
+<tr>
+<td><code>Alt+h</code></td>
+<td>Normal/Visual</td>
+<td>行/選択範囲を左へ移動</td>
+</tr>
+<tr>
+<td><code>Alt+l</code></td>
+<td>Normal/Visual</td>
+<td>行/選択範囲を右へ移動</td>
+</tr>
+</tbody>
+</table>
+<h3>スニペット (mini.snippets)</h3>
+<table>
+<thead>
+<tr>
+<th>ショートカット</th>
+<th>モード</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl+s</code></td>
+<td>Insert</td>
+<td>スニペットを展開</td>
+</tr>
+<tr>
+<td><code>Ctrl+l</code></td>
+<td>Insert</td>
+<td>次のプレースホルダへジャンプ</td>
+</tr>
+<tr>
+<td><code>Ctrl+h</code></td>
+<td>Insert</td>
+<td>前のプレースホルダへジャンプ</td>
+</tr>
+<tr>
+<td><code>Ctrl+c</code></td>
+<td>Insert</td>
+<td>スニペット編集を中止</td>
+</tr>
+</tbody>
+</table>
+<h3>タグジャンプ (gutentags / ctags)</h3>
+<p>タグファイルは gutentags により自動生成・更新されます。</p>
+<table>
+<thead>
+<tr>
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Ctrl+]</code></td>
+<td>カーソル下のシンボルの定義へジャンプ</td>
+</tr>
+<tr>
+<td><code>Ctrl+t</code></td>
+<td>ジャンプ前の位置に戻る</td>
+</tr>
+<tr>
+<td><code>,tv</code> / <code>F8</code></td>
+<td>Vista タグバーの表示/非表示</td>
+</tr>
+</tbody>
+</table>
+<h3>その他</h3>
+<table>
+<thead>
+<tr>
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Esc</code></td>
+<td>検索ハイライトを解除</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>エディタ設定</h2>
+<ul>
+<li><strong>インデント:</strong> スペース2個（タブは展開）</li>
+<li><strong>行番号:</strong> 有効（絶対番号）</li>
+<li><strong>カーソル行:</strong> ハイライト表示</li>
+<li><strong>検索:</strong> 大文字小文字を無視（大文字入力時は区別）</li>
+<li><strong>クリップボード:</strong> システムと同期</li>
+<li><strong>Undo履歴:</strong> セッション間で保持</li>
+</ul>
+<h3>自動保存・バックアップ (auto-save.nvim)</h3>
+<p>ファイルは <strong>auto-save.nvim</strong> により自動保存されます（<code>InsertLeave</code> / <code>TextChanged</code> から3秒後）。</p>
+<p><strong>バックアップファイルの保存先:</strong></p>
+<pre><code>~/VIM_BACKUP_FILES/
+</code></pre>
+<p><strong>バックアップファイルの命名規則:</strong></p>
+<p>ファイル名に時刻（時間単位）のタイムスタンプが付加されます。</p>
+<pre><code>元ファイル:  main.py
+バックアップ: main.py_2025-11-06_14
+              main.py_2025-11-06_15
+              main.py_2025-11-07_09
+</code></pre>
+<p><strong>過去のファイルを復元するには:</strong></p>
+<pre><code class="language-bash"># バックアップ一覧を確認
+ls ~/VIM_BACKUP_FILES/
+
+# 特定ファイルのバックアップを検索
+ls ~/VIM_BACKUP_FILES/ | grep &quot;ファイル名&quot;
+
+# 復元（コピー）
+cp ~/VIM_BACKUP_FILES/main.py_2025-11-06_14 ./main.py
+</code></pre>
+<p><strong>Undo 履歴:</strong></p>
+<p>セッション間で Undo 履歴が保持されるため、Neovim を再起動しても <code>u</code> で過去の変更を戻せます。Undo ファイルは <code>~/.local/state/nvim/undo/</code> に保存されます。</p>
+<hr />
+<h2>インストール済みプラグイン</h2>
+<ul>
+<li><strong>lazy.nvim</strong> - プラグインマネージャー</li>
+<li><strong>tokyonight</strong> - カラースキーム</li>
+<li><strong>NERDTree</strong> - ファイルエクスプローラー</li>
+<li><strong>Telescope</strong> - ファジーファインダー</li>
+<li><strong>nvim-lspconfig</strong> - LSP サポート</li>
+<li><strong>nvim-cmp</strong> - 自動補完</li>
+<li><strong>LuaSnip</strong> - スニペット</li>
+<li><strong>vim-fugitive</strong> - Git 連携</li>
+<li><strong>mason.nvim</strong> - LSP インストーラー</li>
+<li><strong>treesitter</strong> - シンタックスハイライト</li>
+<li><strong>copilot.vim</strong> - GitHub Copilot</li>
+<li><strong>R.nvim</strong> - R 言語サポート</li>
+<li><strong>ferret</strong> - プロジェクト全体の検索・置換（<code>:Ack</code>/<code>:Acks</code>）</li>
+<li><strong>claudecode.nvim</strong> - Claude Code AI アシスタント連携</li>
+<li><strong>mini.nvim</strong> - 行移動 (mini.move)、スニペット (mini.snippets)、テキスト整列 (mini.align)、引数の分割/結合 (mini.splitjoin) 等</li>
+<li><strong>vim-gutentags</strong> - 自動タグ生成・管理</li>
+<li><strong>vista.vim</strong> - タグバー（LSP/ctags 対応）</li>
+</ul>
+<hr />
+<h2>初心者向けヒント</h2>
+<ol>
+<li><code>,fk</code> でキーマップ一覧を表示</li>
+<li><code>Ctrl+n</code> でファイルエクスプローラーを開く</li>
+<li><code>,ff</code> でファイルを素早く検索</li>
+<li><code>,fg</code> でファイル内のテキストを検索</li>
+<li>シンボル上で <code>K</code> を押すとドキュメントを表示</li>
+</ol>
+</body>
+</html>
