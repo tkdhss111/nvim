@@ -3,13 +3,13 @@
 ## インストール
 
 ```bash
-git clone git@github.com:tkdhss111/vim.git
+git clone git@github.com:tkdhss111/nvim.git
 ```
 
 HTTPS の場合:
 
 ```bash
-git clone https://github.com/tkdhss111/vim.git
+git clone https://github.com/tkdhss111/nvim.git
 ```
 
 ### 自動セットアップ（推奨）
@@ -17,7 +17,7 @@ git clone https://github.com/tkdhss111/vim.git
 リポジトリに含まれる `install.sh` を実行すると、必要な依存パッケージのインストールからシンボリックリンクの作成、プラグインの初期化まで一括で行えます。
 
 ```bash
-cd vim/.config/nvim
+cd nvim/.config/nvim
 chmod +x install.sh
 ./install.sh
 ```
@@ -45,20 +45,20 @@ Neovim の設定ファイルはリポジトリ内の `.config/nvim/` にあり�
 `~/.config/nvim` へシンボリックリンクを作成してください。
 
 ```bash
-ln -s /path/to/vim/.config/nvim ~/.config/nvim
+ln -s /path/to/nvim/.config/nvim ~/.config/nvim
 ```
 
-例（クローン先が `~/vim` の場合）:
+例（クローン先が `~/nvim` の場合）:
 
 ```bash
-ln -s ~/vim/.config/nvim ~/.config/nvim
+ln -s ~/nvim/.config/nvim ~/.config/nvim
 ```
 
 既に `~/.config/nvim` が存在する場合は、先にバックアップしてください:
 
 ```bash
 mv ~/.config/nvim ~/.config/nvim.bak
-ln -s ~/vim/.config/nvim ~/.config/nvim
+ln -s ~/nvim/.config/nvim ~/.config/nvim
 ```
 
 ## 概要
