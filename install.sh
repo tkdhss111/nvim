@@ -302,7 +302,20 @@ mkdir -p "${XDG_CACHE_HOME:-$HOME/.cache}/nvim/tags"
 ok "Directories created."
 
 # ============================================================================
-# 12. Ensure ~/.local/bin is in PATH
+# 12. Configure ctags for Modern Fortran
+# ============================================================================
+info "Configuring ctags for modern Fortran (module function/subroutine)..."
+
+mkdir -p "$HOME/.ctags.d"
+cat > "$HOME/.ctags.d/fortran.ctags" << 'CTAGS_EOF'
+--regex-Fortran=/^[ \t]*module[ \t]+function[ \t]+([a-zA-Z_][a-zA-Z0-9_]*)/\1/f,function/
+--regex-Fortran=/^[ \t]*module[ \t]+subroutine[ \t]+([a-zA-Z_][a-zA-Z0-9_]*)/\1/s,subroutine/
+CTAGS_EOF
+
+ok "ctags Fortran config written to ~/.ctags.d/fortran.ctags"
+
+# ============================================================================
+# 13. Ensure ~/.local/bin is in PATH
 # ============================================================================
 if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
     warn "~/.local/bin is not in PATH. Add this to your shell profile:"
@@ -323,7 +336,7 @@ if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
 fi
 
 # ============================================================================
-# 13. First Launch - Install Plugins
+# 14. First Launch - Install Plugins
 # ============================================================================
 echo ""
 info "Bootstrap complete! On first launch, Neovim will:"
