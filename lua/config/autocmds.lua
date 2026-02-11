@@ -65,6 +65,54 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+-- Parquet → CSV 変換コマンド (:ParquetToCsv [output.csv])
+vim.api.nvim_create_user_command("ParquetToCsv", function(opts)
+	local input = vim.fn.expand("%:p")
+	if not input:match("%.parquet$") then
+		vim.notify("Current file is not a .parquet file", vim.log.levels.ERROR)
+		return
+	end
+	local output = opts.args ~= "" and opts.args or input:gsub("%.parquet$", ".csv")
+	local cmd = string.format('duckdb -c "COPY (SELECT * FROM \'%s\') TO \'%s\' (HEADER, DELIMITER \',\');"', input, output)
+	vim.fn.jobstart(cmd, {
+		on_exit = function(_, code)
+			if code == 0 then
+				vim.schedule(function()
+					vim.notify("Saved: " .. output)
+				end)
+			else
+				vim.schedule(function()
+					vim.notify("Conversion failed (exit code " .. code .. ")", vim.log.levels.ERROR)
+				end)
+			end
+		end,
+	})
+end, { nargs = "?", desc = "Convert current parquet file to CSV" })
+
+-- CSV → Parquet 変換コマンド (:CsvToParquet [output.parquet])
+vim.api.nvim_create_user_command("CsvToParquet", function(opts)
+	local input = vim.fn.expand("%:p")
+	if not input:match("%.csv$") then
+		vim.notify("Current file is not a .csv file", vim.log.levels.ERROR)
+		return
+	end
+	local output = opts.args ~= "" and opts.args or input:gsub("%.csv$", ".parquet")
+	local cmd = string.format('duckdb -c "COPY (SELECT * FROM \'%s\') TO \'%s\' (FORMAT PARQUET);"', input, output)
+	vim.fn.jobstart(cmd, {
+		on_exit = function(_, code)
+			if code == 0 then
+				vim.schedule(function()
+					vim.notify("Saved: " .. output)
+				end)
+			else
+				vim.schedule(function()
+					vim.notify("Conversion failed (exit code " .. code .. ")", vim.log.levels.ERROR)
+				end)
+			end
+		end,
+	})
+end, { nargs = "?", desc = "Convert current CSV file to Parquet" })
+
 -- Parquet ファイルを DuckDB で開く
 autocmd("BufReadCmd", {
 	group = general,
