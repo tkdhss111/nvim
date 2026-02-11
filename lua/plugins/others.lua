@@ -97,7 +97,7 @@ return {
   -- CSV file support
   {
     "chrisbra/csv.vim",
-    ft = "csv",
+    event = { "BufReadPre *.csv", "BufNewFile *.csv" },
     init = function()
       -- Must be set BEFORE plugin loads
       vim.g.csv_delim = ","
