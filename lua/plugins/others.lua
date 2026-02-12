@@ -52,7 +52,7 @@ return {
       -- Detect OS only once
       if vim.fn.exists("g:os") == 0 then
         local is_windows = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
-        local username = os.getenv("USER") or os.getenv("USERNAME")
+        local username = os.getenv("USER") or os.getenv("USERNAME") or "user"
 
         if is_windows then
           vim.g.os = "Windows"

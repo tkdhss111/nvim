@@ -27,27 +27,7 @@ return {
       -- Comment toggling
       require("mini.comment").setup()
 
-      -- Snippets
-      local mini_snips = require("mini.snippets")
-      local gen_loader = mini_snips.gen_loader
-
-      mini_snips.setup({
-        -- Load only YOUR snippet file(s)
-        snippets = {
-          gen_loader.from_file(vim.fn.expand("~/.config/nvim/snippets/global.json")),
-        },
-
-        -- Prevent mini.nvim from searching default runtime snippets
-        custom_dirs = {},
-        silent = true,
-
-        mappings = {
-          expand = "<C-s>",
-          jump_next = "<Tab>",
-          jump_prev = "<C-h>",
-          stop = "<C-c>",
-        },
-      })
+      -- Snippets setup is in config/snippets.lua (loaded via VeryLazy)
     end,
   },
 }
