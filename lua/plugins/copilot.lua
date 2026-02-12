@@ -32,7 +32,7 @@ return {
             accept  = "<TAB>",
             next    = "<M-]>",
             prev    = "<M-[>",
-            dismiss = "<C-]>",
+            dismiss = "<C-e>",
           },
         },
         filetypes = {

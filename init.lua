@@ -4,6 +4,11 @@
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
 
+-- Providers (must be before plugins load)
+vim.g.python3_host_prog = vim.fn.expand("~/.config/nvim/venv/bin/python")
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_perl_provider = 0
+
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then

@@ -13,6 +13,12 @@ return {
   config = function()
     local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
+    -- Disable diagnostic signs (gutter marks) and underlines (wave lines)
+    vim.diagnostic.config({
+      signs = false,
+      underline = false,
+    })
+
     -- Global LSP keymaps (applied when LSP attaches)
     vim.api.nvim_create_autocmd("LspAttach", {
       callback = function(args)
