@@ -4,6 +4,9 @@
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
 
+-- Nerd Font detection (must be before plugins load)
+vim.g.have_nerd_font = true
+
 -- Providers (must be before plugins load)
 vim.g.python3_host_prog = vim.fn.expand("~/.config/nvim/venv/bin/python")
 vim.g.loaded_ruby_provider = 0

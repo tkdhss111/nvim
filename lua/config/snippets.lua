@@ -20,7 +20,7 @@ local lang_patterns = {
 mini_snippets.setup({
   snippets = {
     -- グローバルスニペットをロード
-    gen_loader.from_file(vim.fn.expand("~/0_tkd/1_hss/2_tools/vim/.config/nvim/snippets/global.json")),
+    gen_loader.from_file(vim.fn.expand("~/.config/nvim/snippets/global.json")),
 
     -- 言語ごとのスニペット
     gen_loader.from_lang({ lang_patterns = lang_patterns }),
@@ -29,7 +29,7 @@ mini_snippets.setup({
   -- スニペット操作用キーマップ
   mappings = {
     expand = "<C-s>",
-    jump_next = "<C-l>",
+    jump_next = "<Tab>",
     jump_prev = "<C-h>",
     stop = "<C-c>",
   },

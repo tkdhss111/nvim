@@ -55,7 +55,7 @@ vim.api.nvim_create_autocmd("FileType", {
 			  syntax match FortranConceal /%/ conceal cchar=.
 			  highlight! link FortranConceal Special
 			]])
-	end, 10)
+		end, 10)
 
 		-- ",," → "%" in insert mode
 		vim.keymap.set("i", ",,", "%", { buffer = bufnr, noremap = true, silent = true })

@@ -89,8 +89,8 @@ map("n", "cy", "Vp<CR>", { desc = "Replace line with yank" })
 
 --------------------------
 -- Insert モード補助
+-- Note: <C-h> reserved for snippet jump_prev (config/snippets.lua)
 --------------------------
-map("i", "<C-h>", "<BS>", opts)
 map("i", "<C-l>", "<Del>", opts)
 map("i", "<C-j>", "<Down>", opts)
 map("i", "<C-k>", "<Up>", opts)

@@ -43,7 +43,7 @@ return {
 
         mappings = {
           expand = "<C-s>",
-          jump_next = "<C-l>",
+          jump_next = "<Tab>",
           jump_prev = "<C-h>",
           stop = "<C-c>",
         },
