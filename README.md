@@ -35,7 +35,8 @@ chmod +x install.sh
 9. Claude Code CLI のインストール（オプション）
 10. 設定ファイルのシンボリックリンク作成（`~/.config/nvim`）
 11. 必要なディレクトリの作成（`~/VIM_BACKUP_FILES` 等）
-12. プラグイン・Tree-sitter パーサー・Mason ツールのヘッドレスインストール（オプション）
+12. ctags の Modern Fortran 対応設定
+13. プラグイン・Tree-sitter パーサー・Mason ツールのヘッドレスインストール（オプション）
 
 **対応OS:** Ubuntu / Debian 系（その他の Linux でも手動調整で対応可能）
 
@@ -71,6 +72,13 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim
 
 ## キーボードショートカット一覧
 
+### 保存・終了
+
+| ショートカット | 動作 |
+|----------------|------|
+| `,w` | 保存 |
+| `,q` | 終了 |
+| `,wq` | 保存して終了 |
 
 ### ナビゲーション - カーソル移動
 
@@ -94,6 +102,15 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim
 | `Shift+Left` | ウィンドウの幅を縮小 |
 | `Shift+Right` | ウィンドウの幅を拡大 |
 
+### タブ操作
+
+| ショートカット | 動作 |
+|----------------|------|
+| `,tn` | 新しいタブを開く |
+| `,tc` | タブを閉じる |
+| `,to` | 他のタブをすべて閉じる |
+| `Tab` | 次のタブへ移動 |
+| `Shift+Tab` | 前のタブへ移動 |
 
 ### ファイルエクスプローラー (NERDTree)
 
@@ -162,8 +179,16 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim
 | `,e` | 診断メッセージをフロート表示 |
 | `[d` | 前の診断へ |
 | `]d` | 次の診断へ |
-| `,f` | コードフォーマット |
+| `,f` | コードフォーマット（conform.nvim 経由） |
 
+### Git 操作 (vim-fugitive)
+
+| ショートカット | 動作 |
+|----------------|------|
+| `,gs` | Git status |
+| `,gb` | Git blame |
+| `,gd` | Git diff (分割表示) |
+| `,gl` | Git log |
 
 ### R プログラミング (R.nvim)
 
@@ -177,9 +202,19 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim
 | `,l` | Visual | 選択範囲を R コンソールへ送信 |
 | `,su` | Normal | 1行目から現在行までを送信 |
 | `,sd` | Normal | 現在行からファイル末尾までを送信 |
-| `,aa` | Normal | ファイル全体を R コンソールへ送信 |
 | `;;` | Insert | ` <- ` を挿入（代入演算子） |
 | `>>` | Insert | ` \|> ` を挿入（パイプ演算子） |
+
+### Fortran プログラミング
+
+*`.f90`, `.f95`, `.f03` 等の Fortran ファイルで有効*
+
+| ショートカット | モード | 動作 |
+|----------------|--------|------|
+| `,,` | Insert | `%` を挿入（型メンバーアクセス） |
+| `F6` | Normal | 保存して `make relwithdebinfo` |
+
+`%` 記号は conceal 機能により `.` として表示されます。ctags は `_smo`（サブモジュール実装）ファイルを優先してジャンプします。
 
 ### ビルド / 実行コマンド
 
@@ -280,11 +315,12 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim
 
 | ショートカット | 動作 |
 |----------------|------|
-| `Ctrl+h` | バックスペース |
 | `Ctrl+l` | デリート |
 | `Ctrl+j` | カーソルを下へ |
 | `Ctrl+k` | カーソルを上へ |
 | `Space` | インサートモードへ（ノーマルから） |
+
+*注: `Ctrl+h` はスニペットのジャンプ（前のプレースホルダ）に予約されています。*
 
 ### 補完 (nvim-cmp)
 
@@ -294,7 +330,8 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim
 | `Enter` | 選択を確定 |
 | `Ctrl+n` | 次の候補 |
 | `Ctrl+p` | 前の候補 |
-| `Shift+Tab` | 前の候補 / スニペットジャンプ |
+
+補完ソース（優先順）: Copilot → LSP → LSP シグネチャ → バッファ → パス
 
 ### Claude Code (AI アシスタント)
 
@@ -309,14 +346,14 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim
 
 ### GitHub Copilot
 
-**コード補完:**
+**コード補完 (copilot.lua):**
 
 | ショートカット | モード | 動作 |
 |----------------|--------|------|
 | `Tab` | Insert | 提案を承認 |
 | `Alt+]` | Insert | 次の提案 |
 | `Alt+[` | Insert | 前の提案 |
-| `Ctrl+]` | Insert | 提案を却下 |
+| `Ctrl+e` | Insert | 提案を却下 |
 | `Alt+Enter` | Insert | 提案パネルを開く |
 
 **Copilot Chat:**
@@ -338,14 +375,36 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim
 | `Alt+h` | Normal/Visual | 行/選択範囲を左へ移動 |
 | `Alt+l` | Normal/Visual | 行/選択範囲を右へ移動 |
 
-### スニペット (mini.snippets)
+### スニペット (mini.snippets + vim.snippet)
 
 | ショートカット | モード | 動作 |
 |----------------|--------|------|
 | `Ctrl+s` | Insert | スニペットを展開 |
-| `Ctrl+l` | Insert | 次のプレースホルダへジャンプ |
+| `Tab` | Insert | 次のプレースホルダへジャンプ |
 | `Ctrl+h` | Insert | 前のプレースホルダへジャンプ |
 | `Ctrl+c` | Insert | スニペット編集を中止 |
+
+スニペットファイルは `~/.config/nvim/snippets/` に配置。言語別（`.lua`, `.py`, `.f90`, `.cpp`, `.md`）およびグローバル（`global.json`）のスニペットに対応。
+
+### Markdown プレビュー
+
+| ショートカット | 動作 |
+|----------------|------|
+| `,mp` | Neovim 内 Markdown プレビューの切り替え (markview.nvim) |
+| `:MarkdownPreview` | ブラウザで Markdown プレビューを開く |
+| `:MarkdownPreviewStop` | ブラウザプレビューを停止 |
+
+### Parquet ファイル操作
+
+DuckDB を使用した Parquet ファイルの読み書きに対応（DuckDB のインストールが必要）。
+
+| コマンド | 動作 |
+|----------|------|
+| `:e file.parquet` | Parquet を CSV として開く（編集・保存可能） |
+| `:ParquetToCsv [output.csv]` | Parquet → CSV 変換 |
+| `:CsvToParquet [output.parquet]` | CSV → Parquet 変換 |
+
+Parquet ファイルを開くと一時 CSV に変換され、保存時に自動で Parquet に書き戻されます。
 
 ### タグジャンプ (gutentags / ctags)
 
@@ -362,17 +421,33 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim
 | ショートカット | 動作 |
 |----------------|------|
 | `Esc` | 検索ハイライトを解除 |
+| `gc` | コメントのトグル（mini.comment） |
 
 ---
 
 ## エディタ設定
 
-- **インデント:** スペース2個（タブは展開）
+- **インデント:** スペース2個（タブは展開、vim-sleuth による自動検出あり）
 - **行番号:** 有効（絶対番号）
 - **カーソル行:** ハイライト表示
 - **検索:** 大文字小文字を無視（大文字入力時は区別）
 - **クリップボード:** システムと同期
 - **Undo履歴:** セッション間で保持
+- **自動ディレクトリ変更:** 有効（`autochdir`）
+- **折り返し:** 有効（単語境界で改行、`↪ ` プレフィックス表示）
+
+### フォーマッター (conform.nvim)
+
+保存時に自動フォーマットが実行されます。手動フォーマットは `,f` キー。
+
+| 言語 | フォーマッター |
+|------|--------------|
+| Lua | stylua |
+| Python | isort, black |
+| JSON | prettier |
+| YAML | prettier |
+| Markdown | prettier |
+
 ### 自動保存・バックアップ (auto-save.nvim)
 
 ファイルは **auto-save.nvim** により自動保存されます（`InsertLeave` / `TextChanged` から3秒後）。
@@ -413,25 +488,119 @@ cp ~/VIM_BACKUP_FILES/main.py_2025-11-06_14 ./main.py
 
 ---
 
+## LSP サーバー
+
+Mason により自動インストール・管理されます。
+
+| サーバー | 言語 |
+|----------|------|
+| lua_ls | Lua |
+| pyright | Python |
+| yamlls | YAML |
+| r_language_server | R |
+
+---
+
 ## インストール済みプラグイン
 
-- **lazy.nvim** - プラグインマネージャー
-- **tokyonight** - カラースキーム
-- **NERDTree** - ファイルエクスプローラー
-- **Telescope** - ファジーファインダー
-- **nvim-lspconfig** - LSP サポート
-- **nvim-cmp** - 自動補完
-- **LuaSnip** - スニペット
-- **vim-fugitive** - Git 連携
-- **mason.nvim** - LSP インストーラー
-- **treesitter** - シンタックスハイライト
-- **copilot.vim** - GitHub Copilot
-- **R.nvim** - R 言語サポート
-- **ferret** - プロジェクト全体の検索・置換（`:Ack`/`:Acks`）
-- **claudecode.nvim** - Claude Code AI アシスタント連携
-- **mini.nvim** - 行移動 (mini.move)、スニペット (mini.snippets)、テキスト整列 (mini.align)、引数の分割/結合 (mini.splitjoin) 等
-- **vim-gutentags** - 自動タグ生成・管理
-- **vista.vim** - タグバー（LSP/ctags 対応）
+### コア
+
+- **[lazy.nvim](https://github.com/folke/lazy.nvim)** - プラグインマネージャー
+- **[tokyonight.nvim](https://github.com/folke/tokyonight.nvim)** - カラースキーム (night スタイル)
+- **[nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)** - シンタックスハイライト (Tree-sitter)
+- **[nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)** - LSP クライアント設定
+- **[mason.nvim](https://github.com/mason-org/mason.nvim)** - LSP / ツール インストーラー
+- **[mason-lspconfig.nvim](https://github.com/mason-org/mason-lspconfig.nvim)** - Mason と LSP の連携
+- **[nvim-cmp](https://github.com/hrsh7th/nvim-cmp)** - 自動補完エンジン
+- **[conform.nvim](https://github.com/stevearc/conform.nvim)** - コードフォーマッター
+- **[vim-sleuth](https://github.com/tpope/vim-sleuth)** - インデント自動検出
+
+### ナビゲーション・UI
+
+- **[telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)** - ファジーファインダー (fzf-native, ui-select 拡張付き)
+- **[NERDTree](https://github.com/preservim/nerdtree)** - ファイルエクスプローラー
+- **[mini.statusline](https://github.com/echasnovski/mini.statusline)** - ステータスライン
+- **[vista.vim](https://github.com/liuchengxu/vista.vim)** - タグバー（LSP/ctags 対応）
+- **[neoscroll.nvim](https://github.com/karb94/neoscroll.nvim)** - スムーズスクロール
+
+### 編集支援
+
+- **[mini.nvim](https://github.com/echasnovski/mini.nvim)** - 行移動 (mini.move)、テキスト整列 (mini.align)、引数の分割/結合 (mini.splitjoin)、コメント (mini.comment)、キーヒント (mini.clue)、スニペット (mini.snippets)
+- **[vim-gutentags](https://github.com/ludovicchabant/vim-gutentags)** - 自動タグ生成・管理
+- **[ferret](https://github.com/wincent/ferret)** - プロジェクト全体の検索・置換（`:Ack`/`:Acks`）
+- **[todo-comments.nvim](https://github.com/folke/todo-comments.nvim)** - TODO/FIX/NOTE コメントのハイライト
+- **[auto-save.nvim](https://github.com/okuuva/auto-save.nvim)** - 自動保存・バックアップ
+
+### Git
+
+- **[vim-fugitive](https://github.com/tpope/vim-fugitive)** - Git コマンド連携
+- **[gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim)** - 行変更のサイン表示
+
+### AI アシスタント
+
+- **[copilot.lua](https://github.com/zbirenbaum/copilot.lua)** - GitHub Copilot コード補完
+- **[copilot-cmp](https://github.com/zbirenbaum/copilot-cmp)** - Copilot と nvim-cmp の連携
+- **[CopilotChat.nvim](https://github.com/CopilotC-Nvim/CopilotChat.nvim)** - Copilot チャット
+- **[claudecode.nvim](https://github.com/coder/claudecode.nvim)** - Claude Code AI アシスタント連携
+
+### 言語サポート
+
+- **[R.nvim](https://github.com/R-nvim/R.nvim)** - R 言語サポート
+- **[csv.vim](https://github.com/chrisbra/csv.vim)** - CSV ファイルサポート
+- **parquet.nvim** (ローカル) - Parquet ファイルの読み書き（DuckDB 経由）
+
+### Markdown
+
+- **[markdown-preview.nvim](https://github.com/iamcco/markdown-preview.nvim)** - ブラウザでの Markdown プレビュー
+- **[markview.nvim](https://github.com/OXY2DEV/markview.nvim)** - Neovim 内 Markdown プレビュー
+
+### その他
+
+- **[toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim)** - ターミナルトグル
+- **[plenary.nvim](https://github.com/nvim-lua/plenary.nvim)** - ユーティリティライブラリ
+- **[nvim-web-devicons](https://github.com/nvim-tree/nvim-web-devicons)** - ファイルアイコン（Nerd Font 使用時）
+
+---
+
+## ディレクトリ構成
+
+```
+~/.config/nvim/
+├── init.lua                  # エントリーポイント（lazy.nvim 初期化）
+├── lua/
+│   ├── config/
+│   │   ├── options.lua       # エディタ設定
+│   │   ├── keymaps.lua       # キーマップ
+│   │   ├── autocmds.lua      # 自動コマンド
+│   │   └── snippets.lua      # スニペット設定 (mini.snippets)
+│   ├── plugins/              # プラグイン定義（lazy.nvim が自動読み込み）
+│   │   ├── init.lua          # コアプラグイン
+│   │   ├── lsp.lua           # LSP 設定
+│   │   ├── cmp.lua           # 補完設定
+│   │   ├── telescope.lua     # Telescope 設定
+│   │   ├── treesitter.lua    # Tree-sitter 設定
+│   │   ├── mason.lua         # Mason 設定
+│   │   ├── colorscheme.lua   # カラースキーム
+│   │   ├── nerdtree.lua      # NERDTree 設定
+│   │   ├── mini.lua          # mini.nvim モジュール
+│   │   ├── statusline.lua    # ステータスライン
+│   │   ├── git.lua           # Git プラグイン
+│   │   ├── copilot.lua       # Copilot 設定
+│   │   ├── claude.lua        # Claude Code 設定
+│   │   ├── conform.lua       # フォーマッター設定
+│   │   ├── r.lua             # R 言語設定
+│   │   ├── ferret.lua        # 検索・置換
+│   │   ├── ctags.lua         # タグ管理
+│   │   ├── markdown.lua      # Markdown プラグイン
+│   │   ├── parquet.lua       # Parquet サポート
+│   │   └── others.lua        # その他のプラグイン
+│   └── parquet/
+│       └── init.lua          # Parquet モジュール本体
+├── snippets/
+│   └── global.json           # グローバルスニペット
+├── install.sh                # セットアップスクリプト
+└── venv/                     # Python 仮想環境（black, isort）
+```
 
 ---
 
@@ -442,3 +611,5 @@ cp ~/VIM_BACKUP_FILES/main.py_2025-11-06_14 ./main.py
 3. `,ff` でファイルを素早く検索
 4. `,fg` でファイル内のテキストを検索
 5. シンボル上で `K` を押すとドキュメントを表示
+6. `,f` で現在のファイルをフォーマット
+7. `,gs` で Git status を確認
