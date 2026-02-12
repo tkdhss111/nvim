@@ -8,8 +8,8 @@ vim.opt.fileencoding = "utf-8"
 vim.opt.number = true          -- 行番号
 vim.opt.relativenumber = false -- 相対行番号
 vim.opt.cursorline = true      -- カーソル行ハイライト
-vim.opt.wrap = false
 vim.opt.scrolloff = 5 -- 上下余裕ライン
+-- wrap settings managed in keymaps.lua
 
 -- インデント設定
 vim.opt.tabstop = 2
@@ -25,10 +25,7 @@ vim.opt.incsearch = true  -- 入力途中でハイライト
 vim.opt.hlsearch = true   -- 検索結果のハイライト
 vim.opt.autochdir = true  -- カレントディレクトリを自動変更
 
--- バックアップファイル関連
-vim.opt.swapfile = false
-vim.opt.backup = false
-vim.opt.writebackup = false
+-- バックアップファイル関連 (managed by auto-save plugin in others.lua)
 
 -- クリップボード
 vim.opt.clipboard = "unnamedplus"
@@ -38,7 +35,7 @@ vim.opt.termguicolors = true
 
 -- Undo 履歴保存
 vim.opt.undofile = true
-vim.opt.undodir = vim.fn.stdpath("state") .. "/undo"
+vim.opt.undodir = vim.fn.stdpath("state") .. "/undo//"
 
 -- サインカラムの常時表示（LSP診断の表示用）
 vim.opt.signcolumn = "yes"

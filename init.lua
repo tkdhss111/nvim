@@ -48,5 +48,4 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
--- 色テーマの設定（tokyonight）
-vim.cmd.colorscheme("tokyonight-night")
+-- 色テーマは colorscheme.lua で設定済み

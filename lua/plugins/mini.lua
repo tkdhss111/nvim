@@ -34,7 +34,7 @@ return {
       mini_snips.setup({
         -- Load only YOUR snippet file(s)
         snippets = {
-          gen_loader.from_file(vim.fn.expand("~/0_tkd/1_hss/2_tools/vim/.config/nvim/snippets/global.json")),
+          gen_loader.from_file(vim.fn.expand("~/.config/nvim/snippets/global.json")),
         },
 
         -- Prevent mini.nvim from searching default runtime snippets

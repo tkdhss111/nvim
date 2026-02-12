@@ -29,6 +29,13 @@ return {
       yaml = { "prettier" },
       markdown = { "prettier" },
     },
+    formatters = {
+      black = {
+        command = vim.fn.expand("~/.config/nvim/venv/bin/black"),
+      },
+      isort = {
+        command = vim.fn.expand("~/.config/nvim/venv/bin/isort"),
+      },
+    },
   },
 }
-

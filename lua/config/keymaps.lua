@@ -58,31 +58,9 @@ map("n", "<leader>ww", function()
   print("Wrap: " .. (vim.wo.wrap and "ON" or "OFF"))
 end, { desc = "Toggle Word Wrap" })
 
---------------------------
--- NERDTree
---------------------------
-map("n", "<C-n>", ":NERDTreeToggle<CR>", { desc = "Toggle NERDTree" })
-map("n", "<C-c>", ":NERDTreeFind<CR>", { desc = "Find file in NERDTree" })
+-- NERDTree keymaps defined in nerdtree.lua (lazy-load triggers)
 
---------------------------
--- Telescope (lazy-loaded)
---------------------------
--- ✅ Wrap in functions to avoid loading before plugin is installed
-map("n", "<leader>ff", function()
-  require("telescope.builtin").find_files()
-end, { desc = "Find Files" })
-
-map("n", "<leader>fg", function()
-  require("telescope.builtin").live_grep()
-end, { desc = "Grep Files" })
-
-map("n", "<leader>fb", function()
-  require("telescope.builtin").buffers()
-end, { desc = "Find Buffers" })
-
-map("n", "<leader>fh", function()
-  require("telescope.builtin").help_tags()
-end, { desc = "Find Help" })
+-- Telescope keymaps defined in telescope.lua
 
 --------------------------
 -- LSP keymaps are defined in lua/plugins/lsp.lua (LspAttach autocmd)

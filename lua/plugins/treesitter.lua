@@ -34,7 +34,12 @@ return {
     -- Enable treesitter-based highlighting for all filetypes
     -- (Neovim 0.11+ uses vim.treesitter.start() instead of plugin options)
     vim.api.nvim_create_autocmd("FileType", {
-      callback = function()
+      callback = function(args)
+        -- Skip filetypes where a dedicated syntax plugin is preferred
+        local dominated_by_plugin = { csv = true }
+        if dominated_by_plugin[vim.bo[args.buf].filetype] then
+          return
+        end
         pcall(vim.treesitter.start)
       end,
     })

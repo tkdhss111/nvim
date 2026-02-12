@@ -66,7 +66,7 @@ return {
     },
     opts = {
       debug = false,
-      show_help = "yes",
+      show_help = true,
       auto_insert_mode = true,
       window = {
         layout = "float",

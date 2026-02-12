@@ -5,8 +5,7 @@ return {
   -- Lazy self-management
   { "folke/lazy.nvim", lazy = false, priority = 1000 },
 
-  -- Comment toggling
-  { "numToStr/Comment.nvim", config = true },
+  -- Comment toggling handled by mini.comment in mini.lua
 
   -- Auto-detect indent
   { "tpope/vim-sleuth" },

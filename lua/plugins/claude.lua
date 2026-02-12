@@ -12,8 +12,7 @@ return {
     { "<leader>as", "<cmd>ClaudeCodeSend<cr>",        mode = "v",                 desc = "Send to Claude" },
   },
   opts = {
-    -- Full path to claude (nvm-installed) with auto-trust for workspace
-    terminal_cmd = vim.fn.expand("~/.nvm/versions/node/v22.20.0/bin/claude"),
+    terminal_cmd = vim.fn.expand("~/.local/bin/claude"),
 
     terminal = {
       split_side = "right",

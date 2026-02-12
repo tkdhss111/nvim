@@ -35,7 +35,7 @@ return {
   -- Smooth scrolling
   {
     "karb94/neoscroll.nvim",
-    event = "WinScrolled",
+    event = "VeryLazy",
     opts = {},
   },
 
