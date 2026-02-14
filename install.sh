@@ -159,11 +159,23 @@ else
 fi
 
 # ============================================================================
-# 4. Python Formatters & Tools (pip)
+# 4. Python Tools (pip, pipx)
 # ============================================================================
 info "Installing Python tools..."
 
 python3 -m pip install --user --upgrade pip 2>/dev/null || true
+
+# Install pipx (required for Mason to install Python-based LSP servers like fortls)
+if command -v pipx &>/dev/null; then
+    ok "pipx already installed."
+else
+    info "Installing pipx..."
+    sudo apt-get install -y pipx
+    pipx ensurepath
+    ok "pipx installed."
+fi
+
+# Install Python formatters
 python3 -m pip install --user \
     black \
     isort \
@@ -342,7 +354,7 @@ echo ""
 info "Bootstrap complete! On first launch, Neovim will:"
 echo "  1. Clone lazy.nvim (plugin manager)"
 echo "  2. Install all plugins automatically"
-echo "  3. Install LSP servers via Mason (lua_ls, pyright, yamlls, r_language_server)"
+echo "  3. Install LSP servers via Mason (lua_ls, pyright, yamlls, r_language_server, fortls, texlab)"
 echo "  4. Install Tree-sitter parsers"
 echo ""
 info "Run 'nvim' to start. First launch may take a minute."
@@ -360,7 +372,7 @@ if [[ ! "$answer" =~ ^[Nn]$ ]]; then
     ok "Tree-sitter parsers installed."
 
     info "Installing Mason tools..."
-    nvim --headless -c "MasonInstall lua-language-server pyright yaml-language-server r-languageserver" -c "sleep 30" -c "qa" 2>/dev/null || true
+    nvim --headless -c "MasonInstall lua-language-server pyright yaml-language-server r-languageserver fortls texlab" -c "sleep 30" -c "qa" 2>/dev/null || true
     ok "Mason tools installed."
 fi
 
@@ -390,6 +402,7 @@ check_cmd "ctags"
 check_cmd "node"
 check_cmd "npm"
 check_cmd "python3"
+check_cmd "pipx"
 check_cmd "R"
 
 echo ""
