@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<title>Neovim 初心者向け演習</title>
+<style>
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; line-height: 1.7; max-width: 900px; margin: 0 auto; padding: 2em; color: #24292e; background: #fff; }
+  h1 { font-size: 2em; border-bottom: 2px solid #e1e4e8; padding-bottom: 0.3em; }
+  h2 { font-size: 1.5em; border-bottom: 1px solid #e1e4e8; padding-bottom: 0.3em; margin-top: 1.5em; }
+  h3 { font-size: 1.25em; margin-top: 1.2em; }
+  code { background: #f6f8fa; padding: 0.2em 0.4em; border-radius: 3px; font-size: 0.9em; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; }
+  pre { background: #f6f8fa; padding: 1em; border-radius: 6px; overflow-x: auto; line-height: 1.5; position: relative; }
+  pre code { background: none; padding: 0; }
+  .copy-btn { position: absolute; top: 0.5em; right: 0.5em; background: #e1e4e8; border: none; border-radius: 4px; padding: 0.3em 0.6em; cursor: pointer; font-size: 0.8em; color: #24292e; opacity: 0; transition: opacity 0.2s; }
+  pre:hover .copy-btn { opacity: 1; }
+  .copy-btn:hover { background: #d1d5da; }
+  .copy-btn.copied { background: #2ea44f; color: #fff; }
+  table { border-collapse: collapse; width: 100%; margin: 1em 0; }
+  th, td { border: 1px solid #dfe2e5; padding: 0.6em 1em; text-align: left; }
+  th { background: #f6f8fa; font-weight: 600; }
+  tr:nth-child(even) { background: #fafbfc; }
+  blockquote { border-left: 4px solid #dfe2e5; margin: 1em 0; padding: 0.5em 1em; color: #6a737d; }
+  hr { border: none; border-top: 2px solid #e1e4e8; margin: 2em 0; }
+  ul { padding-left: 1.5em; }
+  li { margin: 0.3em 0; }
+  input[type="checkbox"] { margin-right: 0.5em; }
+  strong { color: #1a1a1a; }
+  a { color: #0366d6; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+<h1 id="neovim">Neovim 初心者向け演習</h1>
+<p>この演習は、本 Neovim 設定の主要機能を段階的に習得するためのハンズオン教材です。
+各演習には <strong>目標</strong>、<strong>手順</strong>、<strong>確認ポイント</strong> があります。順番に進めてください。</p>
+<p><strong>前提:</strong> <code>install.sh</code> によるセットアップが完了していること。</p>
+<p><strong>リーダーキー:</strong> <code>,</code>（カンマ）</p>
+<hr />
+<h2 id="0">演習 0: 練習用ファイルの準備</h2>
+<p>ターミナルで以下を実行し、練習用ディレクトリを作成します。</p>
+<pre class="codehilite"><code class="language-bash">mkdir -p ~/nvim_exercise
+cd ~/nvim_exercise
+git init
+
+cat &lt;&lt; 'EOF' &gt; hello.py
+def greet(name):
+    message = &quot;Hello, &quot; + name + &quot;!&quot;
+    print(message)
+    return message
+
+def add(a, b):
+    result = a + b
+    return result
+
+def multiply(x, y):
+    product = x * y
+    return product
+
+# TODO: subtract 関数を実装する
+# FIX: greet 関数で空の名前を処理する
+
+names = [&quot;Alice&quot;, &quot;Bob&quot;, &quot;Charlie&quot;]
+for name in names:
+    greet(name)
+
+print(add(3, 5))
+print(multiply(4, 7))
+EOF
+
+cat &lt;&lt; 'EOF' &gt; notes.md
+# プロジェクトメモ
+
+## やることリスト
+
+- [x] hello.py を作成
+- [ ] テストを書く
+- [ ] ドキュメントを整備
+
+## メモ
+
+これは **Neovim 演習用** のファイルです。
+`コード` を書く練習をしましょう。
+
+| 機能       | 状態   |
+|------------|--------|
+| 基本移動   | 未着手 |
+| 検索       | 未着手 |
+| LSP        | 未着手 |
+
+&gt; 引用ブロックの例です。
+&gt; 複数行にまたがることもできます。
+EOF
+
+cat &lt;&lt; 'EOF' &gt; data.json
+{
+  &quot;users&quot;: [
+    {&quot;id&quot;: 1, &quot;name&quot;: &quot;Alice&quot;, &quot;role&quot;: &quot;admin&quot;},
+    {&quot;id&quot;: 2, &quot;name&quot;: &quot;Bob&quot;, &quot;role&quot;: &quot;user&quot;},
+    {&quot;id&quot;: 3, &quot;name&quot;: &quot;Charlie&quot;, &quot;role&quot;: &quot;user&quot;}
+  ],
+  &quot;settings&quot;: {
+    &quot;theme&quot;: &quot;dark&quot;,
+    &quot;language&quot;: &quot;ja&quot;,
+    &quot;notifications&quot;: true
+  }
+}
+EOF
+
+cat &lt;&lt; 'EOF' &gt; config.yaml
+server:
+  host: localhost
+  port: 8080
+  debug: true
+
+database:
+  host: localhost
+  port: 5432
+  name: myapp
+  user: admin
+
+logging:
+  level: info
+  format: json
+EOF
+
+cat &lt;&lt; 'EOF' &gt; style.lua
+local M = {}
+
+function M.setup()
+  local config = {
+    theme = &quot;tokyonight&quot;,
+    transparent = false,
+    styles = {
+      comments = { italic = true },
+      keywords = { bold = true },
+    },
+  }
+  return config
+end
+
+function M.get_colors()
+  return {
+    red = &quot;#ff0000&quot;,
+    green = &quot;#00ff00&quot;,
+    blue = &quot;#0000ff&quot;,
+  }
+end
+
+return M
+EOF
+
+git add -A &amp;&amp; git commit -m &quot;演習用の初期コミット&quot;
+</code></pre>
+
+<p>準備ができたら Neovim を起動します:</p>
+<pre class="codehilite"><code class="language-bash">cd ~/nvim_exercise
+nvim hello.py
+</code></pre>
+
+<hr />
+<h2 id="1">レベル 1: 基本操作 — 移動とモード切替</h2>
+<h3 id="11">演習 1.1: モードの切り替え</h3>
+<p><strong>目標:</strong> ノーマル・インサート・ビジュアル・コマンドの4つのモードを自在に切り替える。</p>
+<ol>
+<li><code>hello.py</code> を開いた状態（ノーマルモード）を確認する</li>
+<li><code>Space</code> を押してインサートモードに入る（この設定独自のキー）</li>
+<li>適当な文字を入力する</li>
+<li><code>Esc</code> を押してノーマルモードに戻る</li>
+<li><code>u</code> を押して変更を元に戻す（アンドゥ）</li>
+<li><code>v</code> を押してビジュアルモードに入り、<code>hjkl</code> でテキストを選択する</li>
+<li><code>Esc</code> でノーマルモードに戻る</li>
+<li><code>:</code> を押してコマンドモードに入り、<code>:q!</code> で保存せず終了する</li>
+</ol>
+<p><strong>確認ポイント:</strong>
+- [ ] 画面左下のモード表示が切り替わることを確認した
+- [ ] <code>Space</code> でインサートモードに入れた
+- [ ] <code>u</code> でアンドゥできた</p>
+<h3 id="12">演習 1.2: カーソル移動</h3>
+<p><strong>目標:</strong> <code>hjkl</code> と拡張移動キーに慣れる。</p>
+<p><code>nvim hello.py</code> で再度開き、以下を試す:</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>キー</th>
+<th>やること</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基本移動</td>
+<td><code>h</code> <code>j</code> <code>k</code> <code>l</code></td>
+<td>左・下・上・右にカーソルを動かす</td>
+</tr>
+<tr>
+<td>行頭へ</td>
+<td><code>Ctrl+h</code></td>
+<td>どの位置からでも行頭に移動する</td>
+</tr>
+<tr>
+<td>行末へ</td>
+<td><code>Ctrl+l</code></td>
+<td>どの位置からでも行末に移動する</td>
+</tr>
+<tr>
+<td>5行下へ</td>
+<td><code>Ctrl+j</code></td>
+<td>素早く下に移動する</td>
+</tr>
+<tr>
+<td>5行上へ</td>
+<td><code>Ctrl+k</code></td>
+<td>素早く上に移動する</td>
+</tr>
+<tr>
+<td>次の単語へ</td>
+<td><code>w</code></td>
+<td>次の単語の先頭へ</td>
+</tr>
+<tr>
+<td>前の単語へ</td>
+<td><code>b</code></td>
+<td>前の単語の先頭へ</td>
+</tr>
+<tr>
+<td>ファイル先頭へ</td>
+<td><code>gg</code></td>
+<td>ファイルの一番上へ</td>
+</tr>
+<tr>
+<td>ファイル末尾へ</td>
+<td><code>G</code></td>
+<td>ファイルの一番下へ</td>
+</tr>
+<tr>
+<td>指定行へ</td>
+<td><code>10G</code></td>
+<td>10行目へジャンプ</td>
+</tr>
+</tbody>
+</table>
+<p><strong>練習:</strong> ファイルの最終行（<code>G</code>）に移動してから、先頭（<code>gg</code>）に戻り、10行目（<code>10G</code>）にジャンプする。次に <code>Ctrl+j</code> を3回押して15行下に移動し、<code>Ctrl+h</code> で行頭に移動する。</p>
+<p><strong>確認ポイント:</strong>
+- [ ] <code>Ctrl+h</code> / <code>Ctrl+l</code> で行頭・行末に瞬時に移動できた
+- [ ] <code>Ctrl+j</code> / <code>Ctrl+k</code> で高速に上下移動できた
+- [ ] <code>gg</code> / <code>G</code> でファイルの先頭・末尾に移動できた</p>
+<h3 id="13">演習 1.3: 基本的な編集</h3>
+<p><strong>目標:</strong> テキストの挿入・削除・コピー・貼り付けの基本操作を覚える。</p>
+<ol>
+<li><code>G</code> でファイル末尾に移動する</li>
+<li><code>o</code> で下に新しい行を作りインサートモードに入る</li>
+<li><code>print("演習完了！")</code> と入力する</li>
+<li><code>Esc</code> でノーマルモードに戻る</li>
+<li><code>yy</code> で現在行をコピー（ヤンク）する</li>
+<li><code>p</code> で下に貼り付ける</li>
+<li><code>dd</code> で現在行を削除する</li>
+<li><code>u</code> を2回押して元に戻す</li>
+</ol>
+<p><strong>コマンドモードでの貼り付け:</strong></p>
+<ol>
+<li><code>yy</code> で適当な行をヤンクする</li>
+<li><code>:</code> でコマンドモードに入る</li>
+<li><code>Ctrl+r</code> <code>"</code> を押す → 直前にヤンクした内容がコマンドラインに貼り付けられる</li>
+<li><code>Esc</code> でコマンドモードを抜ける</li>
+</ol>
+<p><em><code>Ctrl+r</code> <code>"</code> はコマンドモードやインサートモードで無名レジスタの内容を貼り付けるキーです。検索（<code>/</code>）の入力時にも使えます。</em></p>
+<p><strong><code>.</code>（ドット）コマンド — 直前の操作を繰り返す:</strong></p>
+<ol>
+<li><code>hello.py</code> の任意の行で <code>dd</code> を押して行を削除する</li>
+<li>別の行に移動して <code>.</code> を押す → 同じ削除操作が繰り返される</li>
+<li><code>u</code> で元に戻す</li>
+<li><code>ciwtest</code> <code>Esc</code> で単語を <code>test</code> に変更する</li>
+<li>別の単語に移動して <code>.</code> を押す → その単語も <code>test</code> に変更される</li>
+<li><code>u</code> ですべて元に戻す</li>
+</ol>
+<p><em><code>.</code> は直前の編集操作（削除、変更、挿入など）を1キーで繰り返す強力なコマンドです。同じ操作を複数箇所に適用するときに便利です。</em></p>
+<p><strong>確認ポイント:</strong>
+- [ ] <code>o</code> で新しい行に入力できた
+- [ ] <code>yy</code> → <code>p</code> でコピー＆ペーストできた
+- [ ] <code>dd</code> で行を削除し、<code>u</code> で復元できた
+- [ ] <code>Ctrl+r</code> <code>"</code> でコマンドラインにヤンク内容を貼り付けられた
+- [ ] <code>.</code> で直前の操作を繰り返せた</p>
+<hr />
+<h2 id="2">レベル 2: ウィンドウ・タブ・ファイル操作</h2>
+<h3 id="21">演習 2.1: ウィンドウ分割</h3>
+<p><strong>目標:</strong> 複数ファイルを同時に表示して作業する。</p>
+<ol>
+<li><code>hello.py</code> を開いている状態で <code>:vsp notes.md</code> を実行する（縦分割）</li>
+<li><code>Shift+l</code> で右のウィンドウ（notes.md）に移動する</li>
+<li><code>Shift+h</code> で左のウィンドウ（hello.py）に戻る</li>
+<li><code>:sp config.yaml</code> を実行する（横分割）</li>
+<li><code>Shift+j</code> で下のウィンドウに移動する</li>
+<li><code>Shift+k</code> で上のウィンドウに戻る</li>
+<li><code>Shift+Right</code> を数回押してウィンドウ幅を広げる</li>
+<li><code>:only</code> で現在のウィンドウ以外をすべて閉じる</li>
+</ol>
+<p><strong>確認ポイント:</strong>
+- [ ] <code>Shift+h/j/k/l</code> でウィンドウ間を自在に移動できた
+- [ ] <code>Shift+矢印キー</code> でウィンドウサイズを変更できた</p>
+<h3 id="22">演習 2.2: タブ操作</h3>
+<p><strong>目標:</strong> タブを使って複数ファイルを管理する。</p>
+<ol>
+<li><code>,tn</code> で新しいタブを開く</li>
+<li><code>Tab</code> で次のタブ（hello.py）に切り替える</li>
+<li><code>Shift+Tab</code> で前のタブに戻る</li>
+<li><code>,tc</code> で現在のタブを閉じる</li>
+</ol>
+<p><strong>確認ポイント:</strong>
+- [ ] <code>Tab</code> / <code>Shift+Tab</code> でタブ間を移動できた
+- [ ] <code>,tn</code> / <code>,tc</code> でタブの作成・削除ができた</p>
+<h3 id="23-nerdtree">演習 2.3: NERDTree（ファイルエクスプローラー）</h3>
+<p><strong>目標:</strong> ファイルツリーを使ってファイルの閲覧・作成・コピー・移動・ブックマークを行う。</p>
+<ol>
+<li><code>Ctrl+n</code> で NERDTree を開く</li>
+<li><code>j</code> / <code>k</code> で <code>notes.md</code> に移動し、<code>Enter</code> または <code>Ctrl+o</code> で開く</li>
+<li><code>Ctrl+c</code> で現在編集中のファイルを NERDTree 上で表示する（そのファイルのディレクトリが作業ディレクトリに設定される）</li>
+</ol>
+<p><strong>ファイル・ディレクトリの作成:</strong></p>
+<ol>
+<li>NERDTree 内で <code>m</code> を押す → ファイル操作メニューが表示される</li>
+<li><code>a</code> を選び <code>test.txt</code> と入力して新規ファイルを作成する</li>
+<li>もう一度 <code>m</code> → <code>a</code> を選び <code>subdir/</code> と入力する（末尾に <code>/</code> を付けるとディレクトリが作成される）</li>
+</ol>
+<p><strong>コピーと移動:</strong></p>
+<ol>
+<li><code>test.txt</code> にカーソルを置き <code>m</code> → <code>c</code>（コピー）を選ぶ → コピー先のパスを入力する（例: <code>test_copy.txt</code>）</li>
+<li><code>test_copy.txt</code> にカーソルを置き <code>m</code> → <code>m</code>（移動/名前変更）を選ぶ → 移動先のパスを入力する（例: <code>subdir/test_copy.txt</code>）</li>
+<li><code>Shift+r</code> で NERDTree を更新し、ファイルが移動されたことを確認する</li>
+</ol>
+<p><strong>ブックマーク:</strong></p>
+<ol>
+<li>よく使うディレクトリやファイルにカーソルを置き <code>:Bookmark 練習用</code> と入力する → ブックマークが登録される</li>
+<li><code>B</code> を押す → ブックマーク一覧が表示される</li>
+<li>ブックマーク上で <code>Enter</code> を押してジャンプする</li>
+<li>不要なブックマーク上で <code>D</code> を押して削除する</li>
+<li><code>Ctrl+n</code> で NERDTree を閉じる</li>
+</ol>
+<p><strong>確認ポイント:</strong>
+- [ ] <code>Ctrl+n</code> で NERDTree を開閉できた
+- [ ] NERDTree からファイルを開けた
+- [ ] <code>m</code> → <code>a</code> でファイルとディレクトリ（末尾 <code>/</code>）を作成できた
+- [ ] <code>m</code> → <code>c</code> でファイルをコピーできた
+- [ ] <code>m</code> → <code>m</code> でファイルを移動（名前変更）できた
+- [ ] <code>:Bookmark</code> でブックマークを登録し、<code>B</code> で一覧表示できた</p>
+<hr />
+<h2 id="3">レベル 3: 検索</h2>
+<h3 id="31">演習 3.1: バッファ内検索</h3>
+<p><strong>目標:</strong> ファイル内のテキストを素早く見つける。</p>
+<ol>
+<li><code>hello.py</code> を開く</li>
+<li><code>/greet</code> と入力して <code>Enter</code> — <code>greet</code> がハイライトされる</li>
+<li><code>n</code> で次の一致箇所に移動する</li>
+<li><code>N</code> で前の一致箇所に戻る</li>
+<li>カーソルを <code>name</code> の上に置いてから <code>*</code> を押す → その単語が検索される</li>
+<li><code>Esc</code> で検索ハイライトを消す</li>
+</ol>
+<p><strong>確認ポイント:</strong>
+- [ ] <code>/パターン</code> で検索でき、<code>n</code> / <code>N</code> で前後に移動できた
+- [ ] <code>*</code> でカーソル下の単語を検索できた
+- [ ] <code>Esc</code> でハイライトを消せた</p>
+<h3 id="32-ferret">演習 3.2: Ferret（プロジェクト全体の検索・置換）</h3>
+<p><strong>目標:</strong> プロジェクト全体のテキストを検索し、一括で置換する。</p>
+<ol>
+<li><code>:Ack greet</code> を実行 → QuickFix リストに検索結果が表示される</li>
+<li>QuickFix リスト内で <code>j</code> / <code>k</code> で結果を選択し、<code>Enter</code> で該当箇所にジャンプする</li>
+<li><code>:Acks /greet/welcome/</code> を実行 → すべての <code>greet</code> が <code>welcome</code> に置換される</li>
+<li><code>:Ack welcome</code> で置換結果を確認する</li>
+<li><code>u</code> で変更を元に戻す（各バッファで個別に）</li>
+</ol>
+<p><strong>確認ポイント:</strong>
+- [ ] <code>:Ack</code> でプロジェクト全体を検索できた
+- [ ] <code>:Acks</code> で一括置換ができた</p>
+<hr />
+<h2 id="4">レベル 4: テキスト編集（中級）</h2>
+<h3 id="41">演習 4.1: テキストオブジェクト</h3>
+<p><strong>目標:</strong> <code>i</code>（内側）/ <code>a</code>（外側）を使って効率的に編集する。</p>
+<p><code>hello.py</code> を開き、以下を順番に試す:</p>
+<ol>
+<li><code>greet</code> 関数内の <code>"Hello, "</code> にカーソルを移動する</li>
+<li><code>ci"</code> を押す → ダブルクォート内のテキストが削除されインサートモードに入る</li>
+<li><code>Welcome,</code> と入力して <code>Esc</code> で戻る</li>
+<li><code>u</code> で元に戻す</li>
+<li><code>greet(name)</code> の <code>name</code> にカーソルを移動する</li>
+<li><code>ci)</code> を押す → 括弧内が削除されインサートモードに入る</li>
+<li><code>user</code> と入力して <code>Esc</code> で戻る</li>
+<li><code>u</code> で元に戻す</li>
+<li><code>vi"</code> で <code>""</code> 内のテキストをビジュアル選択してみる</li>
+<li><code>Esc</code> で選択を解除する</li>
+</ol>
+<p><strong>応用:</strong> <code>data.json</code> を開いて以下を試す:
+- <code>"Alice"</code> にカーソルを置き <code>yi"</code> → 名前だけがヤンクされる
+- <code>{"id": 1, ...}</code> の <code>{</code> にカーソルを置き <code>vi{</code> → オブジェクト内が選択される
+- <code>[</code> にカーソルを置き <code>va[</code> → 配列全体が選択される</p>
+<p><strong>確認ポイント:</strong>
+- [ ] <code>ci"</code> で引用符内を変更できた
+- [ ] <code>ci)</code> で括弧内を変更できた
+- [ ] <code>vi{</code> で波括弧内を選択できた</p>
+<h3 id="42">演習 4.2: ヤンクを使った置換</h3>
+<p><strong>目標:</strong> この設定独自のコピー＆置換操作を使う。</p>
+<ol>
+<li><code>hello.py</code> で <code>result</code> にカーソルを置き <code>yiw</code> でヤンクする</li>
+<li><code>product</code> にカーソルを移動する</li>
+<li><code>ciy</code> を押す → <code>product</code> が <code>result</code> に置換される</li>
+<li><code>u</code> で元に戻す</li>
+<li>別の方法: <code>product</code> にカーソルを置き <code>Ctrl+p</code> を押す → 同様にヤンク内容で置換される</li>
+</ol>
+<p><strong>確認ポイント:</strong>
+- [ ] <code>ciy</code> でヤンクしたテキストで単語を置換できた
+- [ ] <code>Ctrl+p</code> でも同じ操作ができた</p>
+<h3 id="43-minimove">演習 4.3: 行の移動（mini.move）</h3>
+<p><strong>目標:</strong> 行や選択範囲を自在に上下移動する。</p>
+<ol>
+<li><code>hello.py</code> の <code>def add</code> の行にカーソルを置く</li>
+<li><code>Alt+j</code> を数回押して行を下に移動する</li>
+<li><code>Alt+k</code> で上に戻す</li>
+<li><code>V</code> で行を選択し、<code>j</code> で複数行に広げる</li>
+<li><code>Alt+j</code> で選択した複数行をまとめて下に移動する</li>
+<li><code>u</code> で元に戻す</li>
+</ol>
+<p><strong>確認ポイント:</strong>
+- [ ] <code>Alt+j</code> / <code>Alt+k</code> で行を上下に移動できた
+- [ ] ビジュアルモードで選択した複数行もまとめて移動できた</p>
+<h3 id="44-minicomment">演習 4.4: コメントの切り替え（mini.comment）</h3>
+<p><strong>目標:</strong> コードのコメントアウト・解除を素早く行う。</p>
+<ol>
+<li><code>hello.py</code> の <code>print(message)</code> の行にカーソルを置く</li>
+<li><code>gcc</code> を押す → 行がコメントアウトされる（<code># print(message)</code>）</li>
+<li>もう一度 <code>gcc</code> を押す → コメントが解除される</li>
+<li><code>V</code> で3行を選択する</li>
+<li><code>gc</code> を押す → 選択した3行がまとめてコメントアウトされる</li>
+<li><code>u</code> で元に戻す</li>
+</ol>
+<p><strong>確認ポイント:</strong>
+- [ ] <code>gcc</code> で1行のコメントを切り替えられた
+- [ ] ビジュアルモードで <code>gc</code> を使い複数行をまとめてコメント切り替えできた</p>
+<hr />
+<h2 id="5-lsp">レベル 5: LSP（コード補助機能）</h2>
+<h3 id="51">演習 5.1: コード補完</h3>
+<p><strong>目標:</strong> 補完機能を使ってコードを素早く書く。</p>
+<ol>
+<li><code>hello.py</code> の末尾に移動する</li>
+<li><code>o</code> で新しい行を作りインサートモードに入る</li>
+<li><code>pri</code> と入力する → 自動的に補完候補が表示される</li>
+<li><code>Ctrl+n</code> / <code>Ctrl+p</code> で候補を上下に選択する</li>
+<li><code>Enter</code> で候補を確定する</li>
+<li><code>Esc</code> でノーマルモードに戻り、<code>u</code> で元に戻す</li>
+</ol>
+<p><strong>確認ポイント:</strong>
+- [ ] 入力中に自動で補完候補が表示された
+- [ ] <code>Ctrl+n</code> / <code>Ctrl+p</code> で候補を選び、<code>Enter</code> で確定できた</p>
+<h3 id="52-gutentags-ctags">演習 5.2: 定義ジャンプ（gutentags / ctags）</h3>
+<p><strong>目標:</strong> タグを使ったコードナビゲーション機能を使う。</p>
+<ol>
+<li><code>hello.py</code> の末尾にある <code>greet(name)</code> の呼び出し箇所にカーソルを置く</li>
+<li><code>Ctrl+]</code> を押す → タグを使って <code>greet</code> 関数の定義にジャンプする</li>
+<li><code>Ctrl+t</code> で元の位置に戻る</li>
+<li><code>:ts greet</code> を実行 → タグ候補の一覧から選択してジャンプする</li>
+</ol>
+<p><strong>確認ポイント:</strong>
+- [ ] <code>Ctrl+]</code> でタグジャンプできた
+- [ ] <code>Ctrl+t</code> で元の位置に戻れた
+- [ ] <code>:ts</code> でタグ候補の一覧を確認できた</p>
+<hr />
+<h2 id="6">レベル 6: ターミナルと便利機能</h2>
+<h3 id="61">演習 6.1: 内蔵ターミナル</h3>
+<p><strong>目標:</strong> Neovim 内でターミナルコマンドを実行する。</p>
+<ol>
+<li><code>F12</code> を押す → 分割ウィンドウでターミナルが開く</li>
+<li><code>ll</code> を実行してファイル一覧を確認する</li>
+<li><code>python3 hello.py</code> を実行してスクリプトの出力を確認する</li>
+<li><code>Esc</code> でターミナルモードを終了する</li>
+<li><code>Shift+k</code> で上のウィンドウ（エディタ）に戻る</li>
+</ol>
+<p><strong>確認ポイント:</strong>
+- [ ] <code>F12</code> でターミナルを開けた
+- [ ] ターミナルでコマンドを実行できた
+- [ ] <code>Esc</code> でターミナルモードを抜けられた</p>
+<h3 id="62-todo">演習 6.2: TODO コメントのハイライト</h3>
+<p><strong>目標:</strong> TODO / FIX / NOTE コメントが自動でハイライトされることを確認する。</p>
+<ol>
+<li><code>hello.py</code> を開く</li>
+<li><code># TODO:</code> と <code># FIX:</code> のコメント行を見つける → 色付きでハイライトされている</li>
+<li>新しい行に <code># NOTE: これはメモです</code> と入力する → NOTE もハイライトされる</li>
+</ol>
+<p><strong>確認ポイント:</strong>
+- [ ] TODO / FIX / NOTE がそれぞれ異なる色でハイライトされた</p>
+<hr />
+<h2 id="7">レベル 7: スニペット</h2>
+<h3 id="71">演習 7.1: スニペットの展開</h3>
+<p><strong>目標:</strong> スニペットを使って定型テキストを素早く入力する。</p>
+<ol>
+<li><code>:e test.md</code> で新しい Markdown ファイルを作成する</li>
+<li>インサートモードで <code>chunk</code> と入力する</li>
+<li><code>Ctrl+s</code> を押す → コードチャンクのスニペットが展開される</li>
+<li>プレースホルダに値を入力する</li>
+<li><code>Tab</code> で次のプレースホルダに移動する</li>
+<li><code>Ctrl+h</code> で前のプレースホルダに戻る</li>
+</ol>
+<p><strong>利用可能なスニペット（グローバル）:</strong></p>
+<table>
+<thead>
+<tr>
+<th>入力</th>
+<th>展開される内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>todo</code></td>
+<td>TODO アイテム（期日付き）</td>
+</tr>
+<tr>
+<td><code>fig</code></td>
+<td>画像挿入タグ</td>
+</tr>
+<tr>
+<td><code>tab</code></td>
+<td>Markdown テーブル</td>
+</tr>
+<tr>
+<td><code>callout</code></td>
+<td>コールアウトブロック</td>
+</tr>
+<tr>
+<td><code>comment</code></td>
+<td>HTML コメント</td>
+</tr>
+<tr>
+<td><code>chunk</code></td>
+<td>コードチャンク</td>
+</tr>
+<tr>
+<td><code>yaml</code></td>
+<td>Quarto 用 YAML ヘッダ</td>
+</tr>
+</tbody>
+</table>
+<p><strong>確認ポイント:</strong>
+- [ ] <code>Ctrl+s</code> でスニペットが展開された
+- [ ] <code>Tab</code> / <code>Ctrl+h</code> でプレースホルダ間を移動できた</p>
+<h3 id="72">演習 7.2: 新しいスニペットの作成</h3>
+<p><strong>目標:</strong> 自分だけのスニペットを追加する。</p>
+<p>スニペットファイルは <code>~/.config/nvim/snippets/global.json</code> にあります（VSCode 形式の JSON）。</p>
+<ol>
+<li>ターミナルまたは Neovim で <code>~/.config/nvim/snippets/global.json</code> を開く</li>
+<li>既存のスニペットを参考に、以下のような新しいスニペットを末尾（<code>}</code> の前）に追加する:</li>
+</ol>
+<pre class="codehilite"><code class="language-json">  &quot;Python 関数テンプレート&quot;: {
+    &quot;prefix&quot;: &quot;pyfunc&quot;,
+    &quot;body&quot;: [
+      &quot;def ${1:function_name}(${2:args}):&quot;,
+      &quot;\t\&quot;\&quot;\&quot;${3:説明}\&quot;\&quot;\&quot;&quot;,
+      &quot;\t${0:pass}&quot;
+    ],
+    &quot;description&quot;: &quot;Python 関数のテンプレート&quot;
+  }
+</code></pre>
+
+<ol>
+<li>ファイルを保存する</li>
+<li><code>hello.py</code> を開き、インサートモードで <code>pyfunc</code> と入力する</li>
+<li><code>Ctrl+s</code> で展開する → 関数テンプレートが挿入される</li>
+<li><code>$1</code>（関数名）に値を入力し、<code>Tab</code> で <code>$2</code>（引数）→ <code>$3</code>（説明）→ <code>$0</code>（本体）と移動する</li>
+</ol>
+<p><strong>スニペットの書式:</strong></p>
+<table>
+<thead>
+<tr>
+<th>記号</th>
+<th>意味</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>$1</code>, <code>$2</code>, ...</td>
+<td>プレースホルダ（Tab で順に移動）</td>
+</tr>
+<tr>
+<td><code>$0</code></td>
+<td>最終カーソル位置</td>
+</tr>
+<tr>
+<td><code>${1:デフォルト値}</code></td>
+<td>デフォルト値付きプレースホルダ</td>
+</tr>
+<tr>
+<td><code>\t</code></td>
+<td>タブ（インデント）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>確認ポイント:</strong>
+- [ ] <code>global.json</code> に新しいスニペットを追加できた
+- [ ] 追加したスニペットが <code>Ctrl+s</code> で展開された
+- [ ] プレースホルダ間を <code>Tab</code> で移動できた</p>
+<hr />
+<h2 id="_1">キーマップ早見表</h2>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>キー</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>カーソル移動</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>行頭 / 行末</td>
+<td><code>Ctrl+h</code> / <code>Ctrl+l</code></td>
+</tr>
+<tr>
+<td>5行上 / 5行下</td>
+<td><code>Ctrl+k</code> / <code>Ctrl+j</code></td>
+</tr>
+<tr>
+<td>ファイル先頭 / 末尾</td>
+<td><code>gg</code> / <code>G</code></td>
+</tr>
+<tr>
+<td><strong>ウィンドウ操作</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>ウィンドウ移動（左/下/上/右）</td>
+<td><code>Shift+h/j/k/l</code></td>
+</tr>
+<tr>
+<td><strong>タブ操作</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>次のタブ / 前のタブ</td>
+<td><code>Tab</code> / <code>Shift+Tab</code></td>
+</tr>
+<tr>
+<td>新規タブ / タブを閉じる</td>
+<td><code>,tn</code> / <code>,tc</code></td>
+</tr>
+<tr>
+<td><strong>ファイル操作</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>ファイルツリー表示</td>
+<td><code>Ctrl+n</code></td>
+</tr>
+<tr>
+<td>プロジェクト検索</td>
+<td><code>:Ack {パターン}</code></td>
+</tr>
+<tr>
+<td>一括置換</td>
+<td><code>:Acks /{old}/{new}/</code></td>
+</tr>
+<tr>
+<td><strong>編集操作</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>コメント切替（1行）</td>
+<td><code>gcc</code></td>
+</tr>
+<tr>
+<td>コメント切替（選択範囲）</td>
+<td><code>gc</code></td>
+</tr>
+<tr>
+<td>行を上下に移動</td>
+<td><code>Alt+j</code> / <code>Alt+k</code></td>
+</tr>
+<tr>
+<td>コードフォーマット</td>
+<td><code>,f</code></td>
+</tr>
+<tr>
+<td><strong>タグジャンプ（ctags）</strong></td>
+<td></td>
+</tr>
+<tr>
+<td>定義へジャンプ</td>
+<td><code>Ctrl+]</code></td>
+</tr>
+<tr>
+<td>ジャンプ前に戻る</td>
+<td><code>Ctrl+t</code></td>
+</tr>
+<tr>
+<td>タグ候補一覧</td>
+<td><code>:ts {名前}</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_2">次のステップ</h2>
+<p>この演習を終えたら、以下のトピックにも挑戦してみましょう:</p>
+<ol>
+<li><strong>マクロ記録:</strong> <code>q{レジスタ名}</code> で操作を記録し、<code>@{レジスタ名}</code> で再生する</li>
+<li><strong>レジスタ活用:</strong> <code>"ayy</code> で <code>a</code> レジスタにヤンク、<code>"ap</code> で貼り付け</li>
+<li><strong>Vista（タグバー）:</strong> <code>,tv</code> または <code>F8</code> でコードの構造を一覧表示する</li>
+<li><strong>Ferret 応用:</strong> <code>:Ack</code> と <code>:Acks</code> を組み合わせた大規模なリファクタリング</li>
+<li><strong>R / Fortran 開発:</strong> 各言語専用のキーマップや機能を試す</li>
+</ol>
+<p>操作に困ったら <code>:help {トピック}</code> で Vim のヘルプを参照してください。</p>
+<script>
+document.querySelectorAll('pre').forEach(function(pre) {
+  var btn = document.createElement('button');
+  btn.className = 'copy-btn';
+  btn.textContent = 'コピー';
+  btn.addEventListener('click', function() {
+    var code = pre.querySelector('code');
+    var text = (code || pre).textContent;
+    navigator.clipboard.writeText(text).then(function() {
+      btn.textContent = 'コピー済み';
+      btn.classList.add('copied');
+      setTimeout(function() { btn.textContent = 'コピー'; btn.classList.remove('copied'); }, 2000);
+    });
+  });
+  pre.appendChild(btn);
+});
+</script>
+</body>
+</html>
