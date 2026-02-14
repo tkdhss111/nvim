@@ -6,11 +6,6 @@
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
--- 保存 & 終了
-map("n", "<leader>w", "<cmd>w<CR>", opts)
-map("n", "<leader>q", "<cmd>q<CR>", opts)
-map("n", "<leader>wq", "<cmd>wq<CR>", opts)
-
 -- ESC: ハイライト解除
 map("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
 

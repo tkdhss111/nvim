@@ -33,6 +33,8 @@ return {
         "pyright",
         "yamlls",
         "r_language_server",
+        "fortls",
+        "texlab",
       },
       -- automatic_enable = true is the default in v2.0+
     },

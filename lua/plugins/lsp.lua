@@ -25,6 +25,9 @@ return {
         local bufnr = args.buf
         local opts = { buffer = bufnr, silent = true }
 
+        -- Disable default K hover to keep <S-k> for window movement
+        pcall(vim.keymap.del, "n", "K", { buffer = bufnr })
+
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
         vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
         vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
@@ -65,10 +68,20 @@ return {
       capabilities = capabilities,
     })
 
+    vim.lsp.config("fortls", {
+      capabilities = capabilities,
+    })
+
+    vim.lsp.config("texlab", {
+      capabilities = capabilities,
+    })
+
     -- Enable all servers
     vim.lsp.enable("lua_ls")
     vim.lsp.enable("pyright")
     vim.lsp.enable("yamlls")
     vim.lsp.enable("r_language_server")
+    vim.lsp.enable("fortls")
+    vim.lsp.enable("texlab")
   end,
 }

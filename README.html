@@ -380,6 +380,7 @@ build-essential 等）</li>
 <li>Claude Code CLI のインストール（オプション）</li>
 <li>設定ファイルのシンボリックリンク作成（<code>~/.config/nvim</code>）</li>
 <li>必要なディレクトリの作成（<code>~/VIM_BACKUP_FILES</code> 等）</li>
+<li>ctags の Modern Fortran 対応設定</li>
 <li>プラグイン・Tree-sitter パーサー・Mason
 ツールのヘッドレスインストール（オプション）</li>
 </ol>
@@ -441,8 +442,83 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim</code></pre>
 <td>Normal</td>
 <td>5行上へ移動</td>
 </tr>
+<tr class="odd">
+<td><code>Ctrl+o</code></td>
+<td>Normal</td>
+<td>前のジャンプ位置に戻る（バッファ間移動も可）</td>
+</tr>
+<tr class="even">
+<td><code>Ctrl+i</code></td>
+<td>Normal</td>
+<td>次のジャンプ位置に進む</td>
+</tr>
 </tbody>
 </table>
+</div>
+<div id="行選択範囲の移動-mini.move" class="section level3">
+<h3>行・選択範囲の移動 (mini.move)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>ショートカット</th>
+<th>モード</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Alt+j</code></td>
+<td>Normal/Visual</td>
+<td>行/選択範囲を下へ移動</td>
+</tr>
+<tr class="even">
+<td><code>Alt+k</code></td>
+<td>Normal/Visual</td>
+<td>行/選択範囲を上へ移動</td>
+</tr>
+<tr class="odd">
+<td><code>Alt+h</code></td>
+<td>Normal/Visual</td>
+<td>行/選択範囲を左へ移動</td>
+</tr>
+<tr class="even">
+<td><code>Alt+l</code></td>
+<td>Normal/Visual</td>
+<td>行/選択範囲を右へ移動</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="インサートモード補助" class="section level3">
+<h3>インサートモード補助</h3>
+<table>
+<thead>
+<tr class="header">
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Ctrl+l</code></td>
+<td>デリート</td>
+</tr>
+<tr class="even">
+<td><code>Ctrl+j</code></td>
+<td>カーソルを下へ</td>
+</tr>
+<tr class="odd">
+<td><code>Ctrl+k</code></td>
+<td>カーソルを上へ</td>
+</tr>
+<tr class="even">
+<td><code>Space</code></td>
+<td>インサートモードへ（ノーマルから）</td>
+</tr>
+</tbody>
+</table>
+<p><em>注: <code>Ctrl+h</code>
+はスニペットのジャンプ（前のプレースホルダ）に予約されています。</em></p>
 </div>
 <div id="ウィンドウ操作" class="section level3">
 <h3>ウィンドウ操作</h3>
@@ -489,9 +565,8 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim</code></pre>
 </tbody>
 </table>
 </div>
-<div id="ファイルエクスプローラー-nerdtree" class="section level3">
-<h3>ファイルエクスプローラー (NERDTree)</h3>
-<p><strong>グローバルショートカット:</strong></p>
+<div id="タブ操作" class="section level3">
+<h3>タブ操作</h3>
 <table>
 <thead>
 <tr class="header">
@@ -501,394 +576,24 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>Ctrl+n</code></td>
-<td>NERDTree の表示/非表示</td>
+<td><code>,tn</code></td>
+<td>新しいタブを開く</td>
 </tr>
 <tr class="even">
-<td><code>Ctrl+c</code></td>
-<td>現在のファイルを NERDTree で表示</td>
+<td><code>,tc</code></td>
+<td>タブを閉じる</td>
 </tr>
 <tr class="odd">
-<td><code>Shift+r</code></td>
-<td>NERDTree を更新</td>
-</tr>
-</tbody>
-</table>
-<p><strong>NERDTree 内 - ファイルを開く:</strong></p>
-<table>
-<thead>
-<tr class="header">
-<th>ショートカット</th>
-<th>動作</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>Enter</code> または <code>o</code></td>
-<td>現在のウィンドウで開く</td>
+<td><code>,to</code></td>
+<td>他のタブをすべて閉じる</td>
 </tr>
 <tr class="even">
-<td><code>s</code></td>
-<td>縦分割で開く</td>
+<td><code>Tab</code></td>
+<td>次のタブへ移動</td>
 </tr>
 <tr class="odd">
-<td><code>i</code></td>
-<td>横分割で開く</td>
-</tr>
-<tr class="even">
-<td><code>t</code></td>
-<td>新しいタブで開く</td>
-</tr>
-<tr class="odd">
-<td><code>go</code></td>
-<td>プレビュー（カーソルは NERDTree に残る）</td>
-</tr>
-<tr class="even">
-<td><code>gi</code></td>
-<td>横分割でプレビュー</td>
-</tr>
-<tr class="odd">
-<td><code>gs</code></td>
-<td>縦分割でプレビュー</td>
-</tr>
-</tbody>
-</table>
-<p><strong>NERDTree 内 - ファイル操作:</strong></p>
-<table>
-<thead>
-<tr class="header">
-<th>ショートカット</th>
-<th>動作</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>m</code></td>
-<td>ファイルメニューを開く（作成/削除/移動/コピー）</td>
-</tr>
-<tr class="even">
-<td><code>a</code></td>
-<td>新規ファイル作成（メニュー経由）</td>
-</tr>
-<tr class="odd">
-<td><code>d</code></td>
-<td>ファイル削除（メニュー経由）</td>
-</tr>
-<tr class="even">
-<td><code>m</code></td>
-<td>ファイル名変更/移動（メニュー経由）</td>
-</tr>
-<tr class="odd">
-<td><code>c</code></td>
-<td>ファイルコピー（メニュー経由）</td>
-</tr>
-</tbody>
-</table>
-<p><strong>NERDTree 内 - ナビゲーション:</strong></p>
-<table>
-<thead>
-<tr class="header">
-<th>ショートカット</th>
-<th>動作</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>u</code></td>
-<td>親ディレクトリへ移動</td>
-</tr>
-<tr class="even">
-<td><code>C</code></td>
-<td>選択したディレクトリをルートに変更</td>
-</tr>
-<tr class="odd">
-<td><code>R</code></td>
-<td>ツリーを更新</td>
-</tr>
-<tr class="even">
-<td><code>I</code></td>
-<td>隠しファイルの表示/非表示</td>
-</tr>
-<tr class="odd">
-<td><code>?</code></td>
-<td>ヘルプの表示/非表示</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="ファジーファインダー-telescope" class="section level3">
-<h3>ファジーファインダー (Telescope)</h3>
-<table>
-<thead>
-<tr class="header">
-<th>ショートカット</th>
-<th>動作</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>,ff</code></td>
-<td>ファイル検索</td>
-</tr>
-<tr class="even">
-<td><code>,fg</code></td>
-<td>テキスト検索（grep）</td>
-</tr>
-<tr class="odd">
-<td><code>,fb</code></td>
-<td>バッファ一覧</td>
-</tr>
-<tr class="even">
-<td><code>,fh</code></td>
-<td>ヘルプタグ検索</td>
-</tr>
-<tr class="odd">
-<td><code>,fo</code></td>
-<td>最近開いたファイル</td>
-</tr>
-<tr class="even">
-<td><code>,fk</code></td>
-<td>キーマップ検索</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="lsp-コード補助機能" class="section level3">
-<h3>LSP (コード補助機能)</h3>
-<table>
-<thead>
-<tr class="header">
-<th>ショートカット</th>
-<th>動作</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>gd</code></td>
-<td>定義へジャンプ</td>
-</tr>
-<tr class="even">
-<td><code>gD</code></td>
-<td>宣言へジャンプ</td>
-</tr>
-<tr class="odd">
-<td><code>gr</code></td>
-<td>参照一覧</td>
-</tr>
-<tr class="even">
-<td><code>gi</code></td>
-<td>実装へジャンプ</td>
-</tr>
-<tr class="odd">
-<td><code>K</code></td>
-<td>ホバードキュメント表示</td>
-</tr>
-<tr class="even">
-<td><code>,rn</code></td>
-<td>シンボル名変更</td>
-</tr>
-<tr class="odd">
-<td><code>,ca</code></td>
-<td>コードアクション</td>
-</tr>
-<tr class="even">
-<td><code>,e</code></td>
-<td>診断メッセージをフロート表示</td>
-</tr>
-<tr class="odd">
-<td><code>[d</code></td>
-<td>前の診断へ</td>
-</tr>
-<tr class="even">
-<td><code>]d</code></td>
-<td>次の診断へ</td>
-</tr>
-<tr class="odd">
-<td><code>,f</code></td>
-<td>コードフォーマット</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="r-プログラミング-r.nvim" class="section level3">
-<h3>R プログラミング (R.nvim)</h3>
-<p><em><code>.r</code>, <code>.rmd</code>, <code>.quarto</code>
-ファイルで有効</em></p>
-<table>
-<thead>
-<tr class="header">
-<th>ショートカット</th>
-<th>モード</th>
-<th>動作</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>Enter</code></td>
-<td>Normal</td>
-<td>現在行を R コンソールへ送信</td>
-</tr>
-<tr class="even">
-<td><code>Enter</code></td>
-<td>Visual</td>
-<td>選択範囲を R コンソールへ送信</td>
-</tr>
-<tr class="odd">
-<td><code>,l</code></td>
-<td>Normal</td>
-<td>現在行を R コンソールへ送信</td>
-</tr>
-<tr class="even">
-<td><code>,l</code></td>
-<td>Visual</td>
-<td>選択範囲を R コンソールへ送信</td>
-</tr>
-<tr class="odd">
-<td><code>,su</code></td>
-<td>Normal</td>
-<td>1行目から現在行までを送信</td>
-</tr>
-<tr class="even">
-<td><code>,sd</code></td>
-<td>Normal</td>
-<td>現在行からファイル末尾までを送信</td>
-</tr>
-<tr class="odd">
-<td><code>,aa</code></td>
-<td>Normal</td>
-<td>ファイル全体を R コンソールへ送信</td>
-</tr>
-<tr class="even">
-<td><code>;;</code></td>
-<td>Insert</td>
-<td><code>&lt;-</code> を挿入（代入演算子）</td>
-</tr>
-<tr class="odd">
-<td><code>&gt;&gt;</code></td>
-<td>Insert</td>
-<td><code>\|&gt;</code> を挿入（パイプ演算子）</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="ビルド-実行コマンド" class="section level3">
-<h3>ビルド / 実行コマンド</h3>
-<table>
-<thead>
-<tr class="header">
-<th>ショートカット</th>
-<th>動作</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>F2</code></td>
-<td>保存して <code>make debugrun</code></td>
-</tr>
-<tr class="even">
-<td><code>F3</code></td>
-<td>保存して <code>make test</code></td>
-</tr>
-<tr class="odd">
-<td><code>F4</code></td>
-<td>保存して <code>make run</code></td>
-</tr>
-<tr class="even">
-<td><code>F5</code></td>
-<td>保存して <code>make release</code></td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="ターミナル" class="section level3">
-<h3>ターミナル</h3>
-<table>
-<thead>
-<tr class="header">
-<th>ショートカット</th>
-<th>モード</th>
-<th>動作</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>F12</code></td>
-<td>Normal</td>
-<td>分割ウィンドウでターミナルを開く</td>
-</tr>
-<tr class="even">
-<td><code>Esc</code></td>
-<td>Terminal</td>
-<td>ターミナルモードを終了</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="検索置換-ferret" class="section level3">
-<h3>検索・置換 (Ferret)</h3>
-<p>バックエンドに <code>rg</code> (ripgrep)
-を使用。隠しファイルも検索対象、<code>build/</code> は除外。</p>
-<table>
-<colgroup>
-<col width="62%" />
-<col width="37%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>コマンド</th>
-<th>動作</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>:Ack {pattern}</code></td>
-<td>プロジェクト全体を検索し、結果を QuickFix リストに表示</td>
-</tr>
-<tr class="even">
-<td><code>:Ack {pattern} {path}</code></td>
-<td>指定パス内を検索</td>
-</tr>
-<tr class="odd">
-<td><code>:Acks /{old}/{new}/</code></td>
-<td>QuickFix リスト内の一致箇所を一括置換</td>
-</tr>
-</tbody>
-</table>
-<p><strong>典型的なワークフロー:</strong></p>
-<ol style="list-style-type: decimal">
-<li><code>:Ack foo</code> — プロジェクト内の <code>foo</code>
-を検索</li>
-<li>QuickFix リストで結果を確認（<code>:cn</code>/<code>:cp</code>
-で移動）</li>
-<li><code>:Acks /foo/bar/</code> — 検索結果の <code>foo</code> を
-<code>bar</code> に一括置換</li>
-</ol>
-</div>
-<div id="テキスト操作" class="section level3">
-<h3>テキスト操作</h3>
-<table>
-<thead>
-<tr class="header">
-<th>ショートカット</th>
-<th>動作</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>ciy</code></td>
-<td>ヤンクしたテキストで単語を置換</td>
-</tr>
-<tr class="even">
-<td><code>Ctrl+p</code></td>
-<td>ヤンクしたテキストで単語を置換</td>
-</tr>
-<tr class="odd">
-<td><code>cy</code></td>
-<td>ヤンクしたテキストで行を置換</td>
-</tr>
-<tr class="even">
-<td><code>,ww</code></td>
-<td>折り返しの切り替え</td>
+<td><code>Shift+Tab</code></td>
+<td>前のタブへ移動</td>
 </tr>
 </tbody>
 </table>
@@ -1082,8 +787,8 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim</code></pre>
 </tbody>
 </table>
 </div>
-<div id="インサートモード補助" class="section level3">
-<h3>インサートモード補助</h3>
+<div id="テキスト操作" class="section level3">
+<h3>テキスト操作</h3>
 <table>
 <thead>
 <tr class="header">
@@ -1093,24 +798,539 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>Ctrl+h</code></td>
-<td>バックスペース</td>
+<td><code>ciy</code></td>
+<td>ヤンクしたテキストで単語を置換</td>
 </tr>
 <tr class="even">
-<td><code>Ctrl+l</code></td>
-<td>デリート</td>
+<td><code>Ctrl+p</code></td>
+<td>ヤンクしたテキストで単語を置換</td>
 </tr>
 <tr class="odd">
-<td><code>Ctrl+j</code></td>
-<td>カーソルを下へ</td>
+<td><code>cy</code></td>
+<td>ヤンクしたテキストで行を置換</td>
 </tr>
 <tr class="even">
-<td><code>Ctrl+k</code></td>
-<td>カーソルを上へ</td>
+<td><code>,ww</code></td>
+<td>折り返しの切り替え</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="ファイルエクスプローラー-nerdtree" class="section level3">
+<h3>ファイルエクスプローラー (NERDTree)</h3>
+<p><strong>グローバルショートカット:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Ctrl+n</code></td>
+<td>NERDTree の表示/非表示</td>
+</tr>
+<tr class="even">
+<td><code>Ctrl+c</code></td>
+<td>現在のファイルを NERDTree で表示</td>
 </tr>
 <tr class="odd">
-<td><code>Space</code></td>
-<td>インサートモードへ（ノーマルから）</td>
+<td><code>Shift+r</code></td>
+<td>NERDTree を更新</td>
+</tr>
+</tbody>
+</table>
+<p><strong>NERDTree 内 - ファイルを開く:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Enter</code> または <code>o</code></td>
+<td>現在のウィンドウで開く</td>
+</tr>
+<tr class="even">
+<td><code>s</code></td>
+<td>縦分割で開く</td>
+</tr>
+<tr class="odd">
+<td><code>i</code></td>
+<td>横分割で開く</td>
+</tr>
+<tr class="even">
+<td><code>t</code></td>
+<td>新しいタブで開く</td>
+</tr>
+<tr class="odd">
+<td><code>go</code></td>
+<td>プレビュー（カーソルは NERDTree に残る）</td>
+</tr>
+<tr class="even">
+<td><code>gi</code></td>
+<td>横分割でプレビュー</td>
+</tr>
+<tr class="odd">
+<td><code>gs</code></td>
+<td>縦分割でプレビュー</td>
+</tr>
+</tbody>
+</table>
+<p><strong>NERDTree 内 - ファイル操作:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>m</code></td>
+<td>ファイルメニューを開く（作成/削除/移動/コピー）</td>
+</tr>
+<tr class="even">
+<td><code>a</code></td>
+<td>新規ファイル作成（メニュー経由）</td>
+</tr>
+<tr class="odd">
+<td><code>d</code></td>
+<td>ファイル削除（メニュー経由）</td>
+</tr>
+<tr class="even">
+<td><code>m</code></td>
+<td>ファイル名変更/移動（メニュー経由）</td>
+</tr>
+<tr class="odd">
+<td><code>c</code></td>
+<td>ファイルコピー（メニュー経由）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>NERDTree 内 - ナビゲーション:</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>u</code></td>
+<td>親ディレクトリへ移動</td>
+</tr>
+<tr class="even">
+<td><code>C</code></td>
+<td>選択したディレクトリをルートに変更</td>
+</tr>
+<tr class="odd">
+<td><code>R</code></td>
+<td>ツリーを更新</td>
+</tr>
+<tr class="even">
+<td><code>I</code></td>
+<td>隠しファイルの表示/非表示</td>
+</tr>
+<tr class="odd">
+<td><code>?</code></td>
+<td>ヘルプの表示/非表示</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="バッファ内検索vim-標準" class="section level3">
+<h3>バッファ内検索（Vim 標準）</h3>
+<table>
+<thead>
+<tr class="header">
+<th>コマンド</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>/{pattern}</code></td>
+<td>前方検索</td>
+</tr>
+<tr class="even">
+<td><code>?{pattern}</code></td>
+<td>後方検索</td>
+</tr>
+<tr class="odd">
+<td><code>n</code></td>
+<td>次の一致へ移動</td>
+</tr>
+<tr class="even">
+<td><code>N</code></td>
+<td>前の一致へ移動</td>
+</tr>
+<tr class="odd">
+<td><code>*</code></td>
+<td>カーソル下の単語を前方検索</td>
+</tr>
+<tr class="even">
+<td><code>#</code></td>
+<td>カーソル下の単語を後方検索</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="検索置換-ferret" class="section level3">
+<h3>検索・置換 (Ferret)</h3>
+<p>バックエンドに <code>rg</code> (ripgrep)
+を使用。隠しファイルも検索対象、<code>build/</code> は除外。</p>
+<table>
+<colgroup>
+<col width="62%" />
+<col width="37%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>コマンド</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>:Ack {pattern}</code></td>
+<td>プロジェクト全体を検索し、結果を QuickFix リストに表示</td>
+</tr>
+<tr class="even">
+<td><code>:Ack {pattern} {path}</code></td>
+<td>指定パス内を検索</td>
+</tr>
+<tr class="odd">
+<td><code>:Acks /{old}/{new}/</code></td>
+<td>QuickFix リスト内の一致箇所を一括置換</td>
+</tr>
+</tbody>
+</table>
+<p><strong>典型的なワークフロー:</strong></p>
+<ol style="list-style-type: decimal">
+<li><code>:Ack foo</code> — プロジェクト内の <code>foo</code>
+を検索</li>
+<li>QuickFix リストで結果を確認（<code>:cn</code>/<code>:cp</code>
+で移動）</li>
+<li><code>:Acks /foo/bar/</code> — 検索結果の <code>foo</code> を
+<code>bar</code> に一括置換</li>
+</ol>
+</div>
+<div id="ファジーファインダー-telescope" class="section level3">
+<h3>ファジーファインダー (Telescope)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>,ff</code></td>
+<td>ファイル検索</td>
+</tr>
+<tr class="even">
+<td><code>,fg</code></td>
+<td>テキスト検索（grep）</td>
+</tr>
+<tr class="odd">
+<td><code>,fb</code></td>
+<td>バッファ一覧</td>
+</tr>
+<tr class="even">
+<td><code>,fh</code></td>
+<td>ヘルプタグ検索</td>
+</tr>
+<tr class="odd">
+<td><code>,fo</code></td>
+<td>最近開いたファイル</td>
+</tr>
+<tr class="even">
+<td><code>,fk</code></td>
+<td>キーマップ検索</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="タグジャンプ-gutentags-ctags" class="section level3">
+<h3>タグジャンプ (gutentags / ctags)</h3>
+<p>タグファイルは gutentags
+により自動生成・更新されます。プロジェクトルートは
+<code>.gutctags</code> → <code>.git</code>
+の順で検出されます。<code>.git</code>
+が存在しないプロジェクトでは、ルートディレクトリに空の
+<code>.gutctags</code> ファイルを作成してください。</p>
+<table>
+<thead>
+<tr class="header">
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Ctrl+]</code></td>
+<td>カーソル下のシンボルの定義へジャンプ</td>
+</tr>
+<tr class="even">
+<td><code>Ctrl+t</code></td>
+<td>ジャンプ前の位置に戻る</td>
+</tr>
+<tr class="odd">
+<td><code>:ts {name}</code></td>
+<td>タグ候補の一覧から選択してジャンプ</td>
+</tr>
+<tr class="even">
+<td><code>:tn</code> / <code>:tp</code></td>
+<td>次 / 前のタグ候補へ移動</td>
+</tr>
+<tr class="odd">
+<td><code>,tv</code> / <code>F8</code></td>
+<td>Vista タグバーの表示/非表示</td>
+</tr>
+</tbody>
+</table>
+<p>タグファイルはファイル保存時に自動更新されるため、手動でのタグ生成は不要です。Fortran
+では
+<code>_smo</code>（サブモジュール実装）ファイルが優先されるようにカスタマイズされています。</p>
+</div>
+<div id="lsp-コード補助機能" class="section level3">
+<h3>LSP (コード補助機能)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>gd</code></td>
+<td>定義へジャンプ</td>
+</tr>
+<tr class="even">
+<td><code>gD</code></td>
+<td>宣言へジャンプ</td>
+</tr>
+<tr class="odd">
+<td><code>gr</code></td>
+<td>参照一覧</td>
+</tr>
+<tr class="even">
+<td><code>gi</code></td>
+<td>実装へジャンプ</td>
+</tr>
+<tr class="odd">
+<td><code>,rn</code></td>
+<td>シンボル名変更</td>
+</tr>
+<tr class="even">
+<td><code>,ca</code></td>
+<td>コードアクション</td>
+</tr>
+<tr class="odd">
+<td><code>,e</code></td>
+<td>診断メッセージをフロート表示</td>
+</tr>
+<tr class="even">
+<td><code>[d</code></td>
+<td>前の診断へ</td>
+</tr>
+<tr class="odd">
+<td><code>]d</code></td>
+<td>次の診断へ</td>
+</tr>
+<tr class="even">
+<td><code>,f</code></td>
+<td>コードフォーマット（conform.nvim 経由）</td>
+</tr>
+</tbody>
+</table>
+<p><em>注: <code>gd</code>（定義へジャンプ）は gutentags の
+<code>Ctrl+]</code> と機能が重複します。LSP サーバーが有効な場合は
+<code>gd</code>（LSP）が優先され、LSP 非対応の言語では
+<code>Ctrl+]</code>（ctags）を使用してください。</em></p>
+</div>
+<div id="git-操作-vim-fugitive" class="section level3">
+<h3>Git 操作 (vim-fugitive)</h3>
+<table>
+<thead>
+<tr class="header">
+<th>コマンド</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>:Git status</code></td>
+<td>Git status（ステージング・アンステージングも可能）</td>
+</tr>
+<tr class="even">
+<td><code>:Git commit</code></td>
+<td>Git commit</td>
+</tr>
+<tr class="odd">
+<td><code>:Git blame</code></td>
+<td>行ごとの blame 表示</td>
+</tr>
+<tr class="even">
+<td><code>:Git diff</code></td>
+<td>Git diff（分割表示）</td>
+</tr>
+<tr class="odd">
+<td><code>:Git log</code></td>
+<td>Git log</td>
+</tr>
+<tr class="even">
+<td><code>:Git push</code></td>
+<td>リモートへ push</td>
+</tr>
+<tr class="odd">
+<td><code>:Git pull</code></td>
+<td>リモートから pull</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="r-プログラミング-r.nvim" class="section level3">
+<h3>R プログラミング (R.nvim)</h3>
+<p><em><code>.r</code>, <code>.rmd</code>, <code>.quarto</code>
+ファイルで有効</em></p>
+<table>
+<thead>
+<tr class="header">
+<th>ショートカット</th>
+<th>モード</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>Enter</code></td>
+<td>Normal</td>
+<td>現在行を R コンソールへ送信</td>
+</tr>
+<tr class="even">
+<td><code>Enter</code></td>
+<td>Visual</td>
+<td>選択範囲を R コンソールへ送信</td>
+</tr>
+<tr class="odd">
+<td><code>,l</code></td>
+<td>Normal</td>
+<td>現在行を R コンソールへ送信</td>
+</tr>
+<tr class="even">
+<td><code>,l</code></td>
+<td>Visual</td>
+<td>選択範囲を R コンソールへ送信</td>
+</tr>
+<tr class="odd">
+<td><code>,su</code></td>
+<td>Normal</td>
+<td>1行目から現在行までを送信</td>
+</tr>
+<tr class="even">
+<td><code>,sd</code></td>
+<td>Normal</td>
+<td>現在行からファイル末尾までを送信</td>
+</tr>
+<tr class="odd">
+<td><code>;;</code></td>
+<td>Insert</td>
+<td><code>&lt;-</code> を挿入（代入演算子）</td>
+</tr>
+<tr class="even">
+<td><code>&gt;&gt;</code></td>
+<td>Insert</td>
+<td><code>\|&gt;</code> を挿入（パイプ演算子）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="fortran-プログラミング" class="section level3">
+<h3>Fortran プログラミング</h3>
+<p><em><code>.f90</code>, <code>.f95</code>, <code>.f03</code> 等の
+Fortran ファイルで有効</em></p>
+<table>
+<thead>
+<tr class="header">
+<th>ショートカット</th>
+<th>モード</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>,,</code></td>
+<td>Insert</td>
+<td><code>%</code> を挿入（型メンバーアクセス）</td>
+</tr>
+</tbody>
+</table>
+<p><code>%</code> 記号は conceal 機能により <code>.</code>
+として表示されます。ctags は
+<code>_smo</code>（サブモジュール実装）ファイルを優先してジャンプします。</p>
+</div>
+<div id="ビルド-実行コマンド" class="section level3">
+<h3>ビルド / 実行コマンド</h3>
+<table>
+<thead>
+<tr class="header">
+<th>ショートカット</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>F2</code></td>
+<td>保存して <code>make debugrun</code></td>
+</tr>
+<tr class="even">
+<td><code>F3</code></td>
+<td>保存して <code>make test</code></td>
+</tr>
+<tr class="odd">
+<td><code>F4</code></td>
+<td>保存して <code>make run</code></td>
+</tr>
+<tr class="even">
+<td><code>F5</code></td>
+<td>保存して <code>make release</code></td>
+</tr>
+<tr class="odd">
+<td><code>F6</code></td>
+<td>保存して <code>make relwithdebinfo</code>（Fortran
+ファイルのみ）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="ターミナル" class="section level3">
+<h3>ターミナル</h3>
+<table>
+<thead>
+<tr class="header">
+<th>ショートカット</th>
+<th>モード</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>F12</code></td>
+<td>Normal</td>
+<td>分割ウィンドウでターミナルを開く</td>
+</tr>
+<tr class="even">
+<td><code>Esc</code></td>
+<td>Terminal</td>
+<td>ターミナルモードを終了</td>
 </tr>
 </tbody>
 </table>
@@ -1141,12 +1361,10 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim</code></pre>
 <td><code>Ctrl+p</code></td>
 <td>前の候補</td>
 </tr>
-<tr class="odd">
-<td><code>Shift+Tab</code></td>
-<td>前の候補 / スニペットジャンプ</td>
-</tr>
 </tbody>
 </table>
+<p>補完ソース（優先順）: Copilot → LSP → LSP シグネチャ → バッファ →
+パス</p>
 </div>
 <div id="claude-code-ai-アシスタント" class="section level3">
 <h3>Claude Code (AI アシスタント)</h3>
@@ -1194,7 +1412,7 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim</code></pre>
 </div>
 <div id="github-copilot" class="section level3">
 <h3>GitHub Copilot</h3>
-<p><strong>コード補完:</strong></p>
+<p><strong>コード補完 (copilot.lua):</strong></p>
 <table>
 <thead>
 <tr class="header">
@@ -1220,7 +1438,7 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim</code></pre>
 <td>前の提案</td>
 </tr>
 <tr class="even">
-<td><code>Ctrl+]</code></td>
+<td><code>Ctrl+e</code></td>
 <td>Insert</td>
 <td>提案を却下</td>
 </tr>
@@ -1263,42 +1481,8 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim</code></pre>
 </tbody>
 </table>
 </div>
-<div id="行選択範囲の移動-mini.move" class="section level3">
-<h3>行・選択範囲の移動 (mini.move)</h3>
-<table>
-<thead>
-<tr class="header">
-<th>ショートカット</th>
-<th>モード</th>
-<th>動作</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>Alt+j</code></td>
-<td>Normal/Visual</td>
-<td>行/選択範囲を下へ移動</td>
-</tr>
-<tr class="even">
-<td><code>Alt+k</code></td>
-<td>Normal/Visual</td>
-<td>行/選択範囲を上へ移動</td>
-</tr>
-<tr class="odd">
-<td><code>Alt+h</code></td>
-<td>Normal/Visual</td>
-<td>行/選択範囲を左へ移動</td>
-</tr>
-<tr class="even">
-<td><code>Alt+l</code></td>
-<td>Normal/Visual</td>
-<td>行/選択範囲を右へ移動</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div id="スニペット-mini.snippets" class="section level3">
-<h3>スニペット (mini.snippets)</h3>
+<div id="スニペット-mini.snippets-vim.snippet" class="section level3">
+<h3>スニペット (mini.snippets + vim.snippet)</h3>
 <table>
 <thead>
 <tr class="header">
@@ -1314,7 +1498,7 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim</code></pre>
 <td>スニペットを展開</td>
 </tr>
 <tr class="even">
-<td><code>Ctrl+l</code></td>
+<td><code>Tab</code></td>
 <td>Insert</td>
 <td>次のプレースホルダへジャンプ</td>
 </tr>
@@ -1330,10 +1514,13 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim</code></pre>
 </tr>
 </tbody>
 </table>
+<p>スニペットファイルは <code>~/.config/nvim/snippets/</code>
+に配置。言語別（<code>.lua</code>, <code>.py</code>, <code>.f90</code>,
+<code>.cpp</code>,
+<code>.md</code>）およびグローバル（<code>global.json</code>）のスニペットに対応。</p>
 </div>
-<div id="タグジャンプ-gutentags-ctags" class="section level3">
-<h3>タグジャンプ (gutentags / ctags)</h3>
-<p>タグファイルは gutentags により自動生成・更新されます。</p>
+<div id="markdown-プレビュー" class="section level3">
+<h3>Markdown プレビュー</h3>
 <table>
 <thead>
 <tr class="header">
@@ -1343,19 +1530,46 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>Ctrl+]</code></td>
-<td>カーソル下のシンボルの定義へジャンプ</td>
+<td><code>,mp</code></td>
+<td>Neovim 内 Markdown プレビューの切り替え (markview.nvim)</td>
 </tr>
 <tr class="even">
-<td><code>Ctrl+t</code></td>
-<td>ジャンプ前の位置に戻る</td>
+<td><code>:MarkdownPreview</code></td>
+<td>ブラウザで Markdown プレビューを開く</td>
 </tr>
 <tr class="odd">
-<td><code>,tv</code> / <code>F8</code></td>
-<td>Vista タグバーの表示/非表示</td>
+<td><code>:MarkdownPreviewStop</code></td>
+<td>ブラウザプレビューを停止</td>
 </tr>
 </tbody>
 </table>
+</div>
+<div id="parquet-ファイル操作" class="section level3">
+<h3>Parquet ファイル操作</h3>
+<p>DuckDB を使用した Parquet ファイルの読み書きに対応（DuckDB
+のインストールが必要）。</p>
+<table>
+<thead>
+<tr class="header">
+<th>コマンド</th>
+<th>動作</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>:ParquetToCsv [output.csv]</code></td>
+<td>Parquet → CSV 変換</td>
+</tr>
+<tr class="even">
+<td><code>:CsvToParquet [output.parquet]</code></td>
+<td>CSV → Parquet 変換</td>
+</tr>
+</tbody>
+</table>
+<p>NERDTree 等で Parquet ファイルを開くと、DuckDB により自動的に CSV
+に変換されて表示されます。通常の CSV として編集し、<code>:w</code>
+で保存すると自動的に Parquet に書き戻されます。</p>
+<pre><code>Parquet ファイルを開く → [DuckDB: Parquet→CSV] → CSV として編集 → :w → [DuckDB: CSV→Parquet] → Parquet 更新</code></pre>
 </div>
 <div id="その他" class="section level3">
 <h3>その他</h3>
@@ -1371,6 +1585,10 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim</code></pre>
 <td><code>Esc</code></td>
 <td>検索ハイライトを解除</td>
 </tr>
+<tr class="even">
+<td><code>gc</code></td>
+<td>コメントのトグル（mini.comment）</td>
+</tr>
 </tbody>
 </table>
 <hr />
@@ -1379,14 +1597,55 @@ ln -s ~/nvim/.config/nvim ~/.config/nvim</code></pre>
 <div id="エディタ設定" class="section level2">
 <h2>エディタ設定</h2>
 <ul>
-<li><strong>インデント:</strong> スペース2個（タブは展開）</li>
+<li><strong>インデント:</strong> スペース2個（タブは展開、vim-sleuth
+による自動検出あり）</li>
 <li><strong>行番号:</strong> 有効（絶対番号）</li>
 <li><strong>カーソル行:</strong> ハイライト表示</li>
 <li><strong>検索:</strong> 大文字小文字を無視（大文字入力時は区別）</li>
 <li><strong>クリップボード:</strong> システムと同期</li>
-<li><strong>Undo履歴:</strong> セッション間で保持 ###
-自動保存・バックアップ (auto-save.nvim)</li>
+<li><strong>Undo履歴:</strong> セッション間で保持</li>
+<li><strong>自動ディレクトリ変更:</strong>
+有効（<code>autochdir</code>）</li>
+<li><strong>折り返し:</strong> 有効（単語境界で改行、<code>↪</code>
+プレフィックス表示）</li>
 </ul>
+<div id="フォーマッター-conform.nvim" class="section level3">
+<h3>フォーマッター (conform.nvim)</h3>
+<p>保存時に自動フォーマットが実行されます。手動フォーマットは
+<code>,f</code> キー。</p>
+<table>
+<thead>
+<tr class="header">
+<th>言語</th>
+<th>フォーマッター</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Lua</td>
+<td>stylua</td>
+</tr>
+<tr class="even">
+<td>Python</td>
+<td>isort, black</td>
+</tr>
+<tr class="odd">
+<td>JSON</td>
+<td>prettier</td>
+</tr>
+<tr class="even">
+<td>YAML</td>
+<td>prettier</td>
+</tr>
+<tr class="odd">
+<td>Markdown</td>
+<td>prettier</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="自動保存バックアップ-auto-save.nvim" class="section level3">
+<h3>自動保存・バックアップ (auto-save.nvim)</h3>
 <p>ファイルは <strong>auto-save.nvim</strong>
 により自動保存されます（<code>InsertLeave</code> /
 <code>TextChanged</code> から3秒後）。</p>
@@ -1413,31 +1672,195 @@ cp ~/VIM_BACKUP_FILES/main.py_2025-11-06_14 ./main.py</code></pre>
 <code>~/.local/state/nvim/undo/</code> に保存されます。</p>
 <hr />
 </div>
+</div>
+<div id="lsp-サーバー" class="section level2">
+<h2>LSP サーバー</h2>
+<p>Mason により自動インストール・管理されます。</p>
+<table>
+<thead>
+<tr class="header">
+<th>サーバー</th>
+<th>言語</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>lua_ls</td>
+<td>Lua</td>
+</tr>
+<tr class="even">
+<td>pyright</td>
+<td>Python</td>
+</tr>
+<tr class="odd">
+<td>yamlls</td>
+<td>YAML</td>
+</tr>
+<tr class="even">
+<td>r_language_server</td>
+<td>R</td>
+</tr>
+<tr class="odd">
+<td>fortls</td>
+<td>Fortran</td>
+</tr>
+<tr class="even">
+<td>texlab</td>
+<td>LaTeX</td>
+</tr>
+</tbody>
+</table>
+<hr />
+</div>
 <div id="インストール済みプラグイン" class="section level2">
 <h2>インストール済みプラグイン</h2>
+<div id="コア" class="section level3">
+<h3>コア</h3>
 <ul>
-<li><strong>lazy.nvim</strong> - プラグインマネージャー</li>
-<li><strong>tokyonight</strong> - カラースキーム</li>
-<li><strong>NERDTree</strong> - ファイルエクスプローラー</li>
-<li><strong>Telescope</strong> - ファジーファインダー</li>
-<li><strong>nvim-lspconfig</strong> - LSP サポート</li>
-<li><strong>nvim-cmp</strong> - 自動補完</li>
-<li><strong>LuaSnip</strong> - スニペット</li>
-<li><strong>vim-fugitive</strong> - Git 連携</li>
-<li><strong>mason.nvim</strong> - LSP インストーラー</li>
-<li><strong>treesitter</strong> - シンタックスハイライト</li>
-<li><strong>copilot.vim</strong> - GitHub Copilot</li>
-<li><strong>R.nvim</strong> - R 言語サポート</li>
-<li><strong>ferret</strong> -
-プロジェクト全体の検索・置換（<code>:Ack</code>/<code>:Acks</code>）</li>
-<li><strong>claudecode.nvim</strong> - Claude Code AI
-アシスタント連携</li>
-<li><strong>mini.nvim</strong> - 行移動 (mini.move)、スニペット
-(mini.snippets)、テキスト整列 (mini.align)、引数の分割/結合
-(mini.splitjoin) 等</li>
-<li><strong>vim-gutentags</strong> - 自動タグ生成・管理</li>
-<li><strong>vista.vim</strong> - タグバー（LSP/ctags 対応）</li>
+<li><strong><a href="https://github.com/folke/lazy.nvim">lazy.nvim</a></strong> -
+プラグインマネージャー</li>
+<li><strong><a href="https://github.com/folke/tokyonight.nvim">tokyonight.nvim</a></strong>
+- カラースキーム (night スタイル)</li>
+<li><strong><a href="https://github.com/nvim-treesitter/nvim-treesitter">nvim-treesitter</a></strong>
+- シンタックスハイライト (Tree-sitter)</li>
+<li><strong><a href="https://github.com/neovim/nvim-lspconfig">nvim-lspconfig</a></strong>
+- LSP クライアント設定</li>
+<li><strong><a href="https://github.com/mason-org/mason.nvim">mason.nvim</a></strong> -
+LSP / ツール インストーラー</li>
+<li><strong><a href="https://github.com/mason-org/mason-lspconfig.nvim">mason-lspconfig.nvim</a></strong>
+- Mason と LSP の連携</li>
+<li><strong><a href="https://github.com/hrsh7th/nvim-cmp">nvim-cmp</a></strong> -
+自動補完エンジン</li>
+<li><strong><a href="https://github.com/stevearc/conform.nvim">conform.nvim</a></strong>
+- コードフォーマッター</li>
+<li><strong><a href="https://github.com/tpope/vim-sleuth">vim-sleuth</a></strong> -
+インデント自動検出</li>
 </ul>
+</div>
+<div id="ナビゲーションui" class="section level3">
+<h3>ナビゲーション・UI</h3>
+<ul>
+<li><strong><a href="https://github.com/nvim-telescope/telescope.nvim">telescope.nvim</a></strong>
+- ファジーファインダー (fzf-native, ui-select 拡張付き)</li>
+<li><strong><a href="https://github.com/preservim/nerdtree">NERDTree</a></strong> -
+ファイルエクスプローラー</li>
+<li><strong><a href="https://github.com/echasnovski/mini.statusline">mini.statusline</a></strong>
+- ステータスライン</li>
+<li><strong><a href="https://github.com/liuchengxu/vista.vim">vista.vim</a></strong> -
+タグバー（LSP/ctags 対応）</li>
+<li><strong><a href="https://github.com/karb94/neoscroll.nvim">neoscroll.nvim</a></strong>
+- スムーズスクロール</li>
+</ul>
+</div>
+<div id="編集支援" class="section level3">
+<h3>編集支援</h3>
+<ul>
+<li><strong><a href="https://github.com/echasnovski/mini.nvim">mini.nvim</a></strong> -
+行移動 (mini.move)、テキスト整列 (mini.align)、引数の分割/結合
+(mini.splitjoin)、コメント (mini.comment)、キーヒント
+(mini.clue)、スニペット (mini.snippets)</li>
+<li><strong><a href="https://github.com/ludovicchabant/vim-gutentags">vim-gutentags</a></strong>
+- 自動タグ生成・管理</li>
+<li><strong><a href="https://github.com/wincent/ferret">ferret</a></strong> -
+プロジェクト全体の検索・置換（<code>:Ack</code>/<code>:Acks</code>）</li>
+<li><strong><a href="https://github.com/folke/todo-comments.nvim">todo-comments.nvim</a></strong>
+- TODO/FIX/NOTE コメントのハイライト</li>
+<li><strong><a href="https://github.com/okuuva/auto-save.nvim">auto-save.nvim</a></strong>
+- 自動保存・バックアップ</li>
+</ul>
+</div>
+<div id="git" class="section level3">
+<h3>Git</h3>
+<ul>
+<li><strong><a href="https://github.com/tpope/vim-fugitive">vim-fugitive</a></strong> -
+Git コマンド連携</li>
+<li><strong><a href="https://github.com/lewis6991/gitsigns.nvim">gitsigns.nvim</a></strong>
+- 行変更のサイン表示</li>
+</ul>
+</div>
+<div id="ai-アシスタント" class="section level3">
+<h3>AI アシスタント</h3>
+<ul>
+<li><strong><a href="https://github.com/zbirenbaum/copilot.lua">copilot.lua</a></strong>
+- GitHub Copilot コード補完</li>
+<li><strong><a href="https://github.com/zbirenbaum/copilot-cmp">copilot-cmp</a></strong>
+- Copilot と nvim-cmp の連携</li>
+<li><strong><a href="https://github.com/CopilotC-Nvim/CopilotChat.nvim">CopilotChat.nvim</a></strong>
+- Copilot チャット</li>
+<li><strong><a href="https://github.com/coder/claudecode.nvim">claudecode.nvim</a></strong>
+- Claude Code AI アシスタント連携</li>
+</ul>
+</div>
+<div id="言語サポート" class="section level3">
+<h3>言語サポート</h3>
+<ul>
+<li><strong><a href="https://github.com/R-nvim/R.nvim">R.nvim</a></strong> - R
+言語サポート</li>
+<li><strong><a href="https://github.com/chrisbra/csv.vim">csv.vim</a></strong> - CSV
+ファイルサポート</li>
+<li><strong>parquet.nvim</strong> (ローカル) - Parquet
+ファイルの読み書き（DuckDB 経由）</li>
+</ul>
+</div>
+<div id="markdown" class="section level3">
+<h3>Markdown</h3>
+<ul>
+<li><strong><a href="https://github.com/iamcco/markdown-preview.nvim">markdown-preview.nvim</a></strong>
+- ブラウザでの Markdown プレビュー</li>
+<li><strong><a href="https://github.com/OXY2DEV/markview.nvim">markview.nvim</a></strong>
+- Neovim 内 Markdown プレビュー</li>
+</ul>
+</div>
+<div id="その他-1" class="section level3">
+<h3>その他</h3>
+<ul>
+<li><strong><a href="https://github.com/akinsho/toggleterm.nvim">toggleterm.nvim</a></strong>
+- ターミナルトグル</li>
+<li><strong><a href="https://github.com/nvim-lua/plenary.nvim">plenary.nvim</a></strong>
+- ユーティリティライブラリ</li>
+<li><strong><a href="https://github.com/nvim-tree/nvim-web-devicons">nvim-web-devicons</a></strong>
+- ファイルアイコン（Nerd Font 使用時）</li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="ディレクトリ構成" class="section level2">
+<h2>ディレクトリ構成</h2>
+<pre><code>~/.config/nvim/
+├── init.lua                  # エントリーポイント（lazy.nvim 初期化）
+├── lua/
+│   ├── config/
+│   │   ├── options.lua       # エディタ設定
+│   │   ├── keymaps.lua       # キーマップ
+│   │   ├── autocmds.lua      # 自動コマンド
+│   │   └── snippets.lua      # スニペット設定 (mini.snippets)
+│   ├── plugins/              # プラグイン定義（lazy.nvim が自動読み込み）
+│   │   ├── init.lua          # コアプラグイン
+│   │   ├── lsp.lua           # LSP 設定
+│   │   ├── cmp.lua           # 補完設定
+│   │   ├── telescope.lua     # Telescope 設定
+│   │   ├── treesitter.lua    # Tree-sitter 設定
+│   │   ├── mason.lua         # Mason 設定
+│   │   ├── colorscheme.lua   # カラースキーム
+│   │   ├── nerdtree.lua      # NERDTree 設定
+│   │   ├── mini.lua          # mini.nvim モジュール
+│   │   ├── statusline.lua    # ステータスライン
+│   │   ├── git.lua           # Git プラグイン
+│   │   ├── copilot.lua       # Copilot 設定
+│   │   ├── claude.lua        # Claude Code 設定
+│   │   ├── conform.lua       # フォーマッター設定
+│   │   ├── r.lua             # R 言語設定
+│   │   ├── ferret.lua        # 検索・置換
+│   │   ├── ctags.lua         # タグ管理
+│   │   ├── markdown.lua      # Markdown プラグイン
+│   │   ├── parquet.lua       # Parquet サポート
+│   │   └── others.lua        # その他のプラグイン
+│   └── parquet/
+│       └── init.lua          # Parquet モジュール本体
+├── snippets/
+│   └── global.json           # グローバルスニペット
+├── install.sh                # セットアップスクリプト
+└── venv/                     # Python 仮想環境（black, isort）</code></pre>
 <hr />
 </div>
 <div id="初心者向けヒント" class="section level2">
@@ -1447,7 +1870,10 @@ cp ~/VIM_BACKUP_FILES/main.py_2025-11-06_14 ./main.py</code></pre>
 <li><code>Ctrl+n</code> でファイルエクスプローラーを開く</li>
 <li><code>,ff</code> でファイルを素早く検索</li>
 <li><code>,fg</code> でファイル内のテキストを検索</li>
-<li>シンボル上で <code>K</code> を押すとドキュメントを表示</li>
+<li><code>Ctrl+]</code> でシンボルの定義へジャンプ（<code>Ctrl+t</code>
+で戻る）</li>
+<li><code>,f</code> で現在のファイルをフォーマット</li>
+<li><code>:Git status</code> で Git status を確認</li>
 </ol>
 </div>
 </div>

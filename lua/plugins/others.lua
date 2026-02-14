@@ -49,18 +49,10 @@ return {
         debounce_delay = 3000,
       })
 
-      -- Detect OS only once
-      if vim.fn.exists("g:os") == 0 then
-        local is_windows = vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1
-        local username = os.getenv("USER") or os.getenv("USERNAME") or "user"
-
-        if is_windows then
-          vim.g.os = "Windows"
-          vim.g.python3_host_prog = "C:/Python312/python.exe"
-        else
-          vim.g.os = (vim.fn.system("uname")):gsub("\n", "")
-          vim.opt.backupdir = vim.fn.expand("/home/" .. username .. "/VIM_BACKUP_FILES//")
-        end
+      -- Backup directory
+      local username = os.getenv("USER")
+      if username then
+        vim.opt.backupdir = vim.fn.expand("/home/" .. username .. "/VIM_BACKUP_FILES//")
       end
 
       -- Enable backup
@@ -73,13 +65,10 @@ return {
       end
 
       -- Add HOURLY TIMESTAMP to backup filename
-      -- Example: file.txt -> file.txt_2025-11-06_14
       vim.opt.backupext = "_" .. os.date("%Y-%m-%d_%H")
 
-      -- Swap and undo
+      -- Swap
       vim.opt.swapfile = true
-      vim.opt.undofile = true
-      vim.opt.undodir = vim.fn.stdpath("state") .. "/undo//"
 
       -- Ensure directories exist
       for _, dir in ipairs({

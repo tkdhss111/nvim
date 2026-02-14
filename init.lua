@@ -4,9 +4,6 @@
 vim.g.mapleader = ","
 vim.g.maplocalleader = ","
 
--- Nerd Font detection (must be before plugins load)
-vim.g.have_nerd_font = true
-
 -- Providers (must be before plugins load)
 vim.g.python3_host_prog = vim.fn.expand("~/.config/nvim/venv/bin/python")
 vim.g.loaded_ruby_provider = 0
@@ -41,14 +38,5 @@ require("config.autocmds")
 -- ❌ REMOVED: These are already loaded by lazy.setup("plugins")
 -- require("plugins.lsp")
 -- require("plugins.cmp")
-
--- Snippets config (this is OK - it's in config/, not plugins/)
--- But only load if mini.snippets is available
-vim.api.nvim_create_autocmd("User", {
-  pattern = "VeryLazy",
-  callback = function()
-    pcall(require, "config.snippets")
-  end,
-})
 
 -- 色テーマは colorscheme.lua で設定済み
