@@ -16,6 +16,7 @@ return {
         "fortran",
         "lua",
         "luadoc",
+        "python",
         "vim",
         "vimdoc",
         "markdown",

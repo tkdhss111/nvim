@@ -31,6 +31,17 @@ autocmd("FileType", {
 	end,
 })
 
+-- Python: 4-space indent (PEP 8)
+autocmd("FileType", {
+	group = general,
+	pattern = { "python" },
+	callback = function()
+		vim.opt_local.shiftwidth = 4
+		vim.opt_local.tabstop = 4
+		vim.opt_local.expandtab = true
+	end,
+})
+
 -- 自動で最後のカーソル位置に戻る
 autocmd("BufReadPost", {
 	group = general,

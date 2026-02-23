@@ -35,8 +35,21 @@ return {
         "r_language_server",
         "fortls",
         "texlab",
+        "ruff",
       },
       -- automatic_enable = true is the default in v2.0+
+    },
+  },
+
+  -- Auto-install non-LSP tools (linters, formatters, DAP)
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    dependencies = { "mason-org/mason.nvim" },
+    opts = {
+      ensure_installed = {
+        "debugpy",
+        "ruff",
+      },
     },
   },
 }
